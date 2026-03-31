@@ -2,11 +2,25 @@ package juego;
 import java.util.Scanner;
 
 public class Principal {
+	static boolean gano=false;
 	static int intentos=5;
 	static lector_palabras palabras = new lector_palabras();
 	
+	public static void perderJuego() {
+		
+		System.out.println("perdio");
+	}
+public static void ganoJuego() {
+		gano=true;
+		System.out.println("gano");
+	}
+	
+	
 	public static void verificarLetra(String PalabraUsuario,String PalabraMaquina ){
 		System.out.println(PalabraMaquina);
+		if(PalabraMaquina.toLowerCase().equals(PalabraUsuario)) {
+			ganoJuego();
+			return;}
 		
 		for(int indice=0; indice<PalabraUsuario.length(); indice++) {
 			
@@ -35,7 +49,7 @@ public class Principal {
 	String entrada;
 	Scanner sc=new Scanner(System.in);
 	
-	while(intentos>0) {
+	while(intentos>0 && !gano) {
 		System.out.println("ingrese una palabra de cinco letras maximo");
 		entrada=sc.nextLine();
 		
@@ -46,10 +60,9 @@ public class Principal {
 		modificadores.rellenarPalabra(entrada);
 		verificarLetra(entrada,palabra);
 		intentos-=1;
-		
-		
 	}
-
+	if(intentos==0) {perderJuego();}
+	
 	}
 
 }
