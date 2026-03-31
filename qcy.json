@@ -1,0 +1,55 @@
+{
+    "output": {
+        "blocklist": [],
+        "equalizer#0": {
+            "balance": 0.0,
+            "bypass": false,
+            "input-gain": -3.0,
+            "left-matrix": [],
+            "mode": "ietf",
+            "num-bands": 5,
+            "output-gain": 0.0,
+            "pitch": 0.0,
+            "right-matrix": [],
+            "split-channels": false,
+            "band0": {
+                "frequency": 80.0,
+                "gain": -2.5,
+                "mode": "rlc",
+                "q": 0.7,
+                "type": "low-shelf"
+            },
+            "band1": {
+                "frequency": 250.0,
+                "gain": -3.5,
+                "mode": "rlc",
+                "q": 1.0,
+                "type": "bell"
+            },
+            "band2": {
+                "frequency": 1000.0,
+                "gain": 1.5,
+                "mode": "rlc",
+                "q": 1.0,
+                "type": "bell"
+            },
+            "band3": {
+                "frequency": 3500.0,
+                "gain": 2.5,
+                "mode": "rlc",
+                "q": 1.5,
+                "type": "bell"
+            },
+            "band4": {
+                "frequency": 8000.0,
+                "gain": -2.0,
+                "mode": "rlc",
+                "q": 2.0,
+                "type": "high-shelf"
+            }
+        },
+        "plugins_order": [
+            "equalizer#0"
+        ]
+    }
+}

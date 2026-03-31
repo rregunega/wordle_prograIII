@@ -2,21 +2,26 @@ package juego;
 import java.util.Scanner;
 
 public class Principal {
-	
+	static int intentos=5;
 	static lector_palabras palabras = new lector_palabras();
 	
 	public static void verificarLetra(String PalabraUsuario,String PalabraMaquina ){
+		System.out.println(PalabraMaquina);
 		
-		for(int indice=0; indice<5; indice++) {
-			char usuario=PalabraUsuario.charAt(indice);
-			char maquina=PalabraMaquina.charAt(indice);
+		for(int indice=0; indice<PalabraUsuario.length(); indice++) {
 			
-			if(PalabraMaquina.contains(String.valueOf(usuario))) {
+			char usuario=PalabraUsuario.charAt(indice);
+			char maquina=PalabraMaquina.toLowerCase().charAt(indice);
+			
+			if(PalabraMaquina.toLowerCase().contains(String.valueOf(usuario))) {
 				
-			if(usuario==maquina) { mostrarLetras.mostrarVerde(maquina);}
-			else {mostrarLetras.mostrarAmarillo(usuario);}}
+			if(usuario==maquina) { mostrarLetras.mostrarVerde(usuario);
+			continue;}
+			else {mostrarLetras.mostrarAmarillo(usuario);
+			continue;}}
 			
 			mostrarLetras.mostrarGris(usuario);
+			continue;
 				
 		}    
 		}
@@ -25,7 +30,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 		
-	int intentos=5;
+	
 	String palabra=palabras.devolverPalabra();
 	String entrada;
 	Scanner sc=new Scanner(System.in);
@@ -39,8 +44,9 @@ public class Principal {
 			continue;
 		}
 		modificadores.rellenarPalabra(entrada);
-		
 		verificarLetra(entrada,palabra);
+		intentos-=1;
+		
 		
 	}
 
