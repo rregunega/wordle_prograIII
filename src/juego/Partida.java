@@ -35,8 +35,8 @@ public class Partida {
 		
 	}
 	
-	public static String[] verificarLetra(String PalabraUsuario,String PalabraMaquina ){
-		String[] estados= new String[5]; 
+	public static Letra[] verificarLetra(String PalabraUsuario,String PalabraMaquina ){
+		Letra[] letras= new Letra[5]; 
 
 		for(int indice=0; indice<PalabraUsuario.length(); indice++) {
 			
@@ -45,26 +45,21 @@ public class Partida {
 			
 			if(PalabraMaquina.toLowerCase().contains(String.valueOf(usuario))) {	
 			if(usuario==maquina) {
-				estados[indice]=Estado.Verde;
+				letras[indice]=new Letra(usuario, Estado.Verde);
 				continue;}
 			else {	
-				estados[indice]=Estado.amarillo;
+				letras[indice]=new Letra(usuario, Estado.amarillo);
 				continue;}
 			}
 			
-			estados[indice]=Estado.gris;;
+			letras[indice]=new Letra(usuario, Estado.gris);
 			continue;
 				
 		}
 		
-		return estados;
+		return letras;
 		}
 	
-	private static void mostrarLetras(String entrada, String[] estado) {
-		for(int indice=0; indice<entrada.length(); indice++) {
-			System.out.println(entrada.charAt(indice)+ " se muestra en = "+ estado[indice]+"\n");
-		}
-	}
 
 	private boolean palabraEQentrada() {
 		if(palabra.toLowerCase().equals(entrada)) {
