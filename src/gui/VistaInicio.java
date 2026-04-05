@@ -19,13 +19,14 @@ public class VistaInicio extends JPanel {
 	public VistaInicio(Frame frame) {
 		setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("W-UNGS-dle");
-		lblNewLabel.setFont(FUENTE_TITULO);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 36, 464, 47);
-		add(lblNewLabel);
+		agregarTitulo();
 
+		agregarPanelDeInstrucciones();
+
+		agregarBotonEmpezar();
+	}
+
+	private void agregarPanelDeInstrucciones() {
 		JPanel panelInstrucciones = new JPanel();
 		panelInstrucciones.setBorder(new LineBorder(COLOR_ACENTO, 2, true));
 		panelInstrucciones.setBounds(29, 145, 422, 316);
@@ -49,16 +50,50 @@ public class VistaInicio extends JPanel {
 		lblInstruccioens.setFont(FUENTE_TEXTO);
 		lblInstruccioens.setBounds(20, 59, 377, 245);
 		panelInstrucciones.add(lblInstruccioens);
+	}
 
+	private void agregarTitulo() {
+		JLabel lblNewLabel = new JLabel("W-UNGS-dle");
+		lblNewLabel.setFont(FUENTE_TITULO);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblNewLabel.setBounds(10, 36, 464, 47);
+		add(lblNewLabel);
+	}
+
+	private void agregarBotonEmpezar() {
 		JButton btnEmpezar = new JButton("Empezar");
+
 		btnEmpezar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEmpezar.setDefaultCapable(false);
-		btnEmpezar.setBorder(null);
-		btnEmpezar.setForeground(COLOR_TEXTO_CLARO);
-		btnEmpezar.setBounds(29, 489, 422, 47);
-		btnEmpezar.setBackground(AZUL);
-		btnEmpezar.setFont(FUENTE_BOTON);
 		btnEmpezar.setFocusPainted(false);
+		btnEmpezar.setBorderPainted(false);
+		btnEmpezar.setContentAreaFilled(false);
+		btnEmpezar.setOpaque(true);
+		btnEmpezar.setBackground(AZUL);
+		btnEmpezar.setForeground(COLOR_TEXTO_CLARO);
+		btnEmpezar.setFont(FUENTE_BOTON);
+		btnEmpezar.setBounds(29, 489, 422, 50);
+
+
+		// Hover + Press effect
+		btnEmpezar.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnEmpezar.setBackground(AZUL.brighter());
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnEmpezar.setBackground(AZUL);
+			}
+
+			public void mousePressed(java.awt.event.MouseEvent evt) {
+				btnEmpezar.setBackground(AZUL.darker());
+			}
+
+			public void mouseReleased(java.awt.event.MouseEvent evt) {
+				btnEmpezar.setBackground(AZUL.brighter());
+			}
+		});
+
 		add(btnEmpezar);
 	}
 
