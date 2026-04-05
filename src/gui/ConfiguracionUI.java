@@ -3,6 +3,8 @@ package gui;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.UIManager;
+
 public class ConfiguracionUI {
 	// Colores
 	public static final Color COLO_PRIMARIO = new Color(59, 60, 61);
@@ -31,4 +33,12 @@ public class ConfiguracionUI {
 	public static final Font FUENTE_SUBTITULO = new Font("Segoe UI", Font.BOLD, 20);
 	public static final Font FUENTE_TEXTO = new Font("Segoe UI", Font.PLAIN, 16);
 	public static final Font FUENTE_BOTON = new Font("Segoe UI", Font.BOLD, 18);
+	
+	public static void setearLookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

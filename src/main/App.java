@@ -3,6 +3,10 @@ package main;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import static gui.ConfiguracionUI.*;
+
+import gui.Ventana;
+
 public class App {
 
 	// le quitamos la responsabilidad de iniciar la aplicacion a la vista
@@ -12,16 +16,11 @@ public class App {
 		SwingUtilities.invokeLater(() -> {
 
 			setearLookAndFeel();
+			new Ventana();
 
 		});
 	}
 
-	private static void setearLookAndFeel() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 
 }

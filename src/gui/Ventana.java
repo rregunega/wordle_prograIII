@@ -17,18 +17,16 @@ public class Ventana extends JFrame {
 
 	public Ventana() {
 		setTitle("W-UNGS-dle!");
-		getContentPane().setFocusCycleRoot(true);
-		getContentPane().setBackground(COLOR_FONDO_PRIMARIO);
-		setBounds(100, 100, 450, 300);
+		setBackground(COLOR_FONDO_PRIMARIO);
 		setSize(500, 647); // Medidas de la ventana
-		getContentPane().setLayout(null); // Layout con coordenadas absolutas
 		setLocationRelativeTo(null); // Centro la ventana en la pantalla
 		setResizable(false); // Evito que la pantalla se redimencione
-
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		cardPanel.setLayout(cardLayout);
 
-		// Creao las vistas
-//		cardPanel.add(new Vista1(this), "VistaInicio");
+		// Creo las vistas
+		cardPanel.add(new VistaInicio(this), "VistaInicio");
 //		cardPanel.add(new Vista2(this), "VistaJuego");
 
 		add(cardPanel);
