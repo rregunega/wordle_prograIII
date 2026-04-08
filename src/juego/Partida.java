@@ -27,12 +27,15 @@ public class Partida {
 			modificadores.rellenarPalabra(entrada);
 			
 			if(!palabraEQentrada()) {
-			mostrarLetras(entrada,verificarLetra(entrada,palabra));
-			intentos-=1;}
+				ganoJuego();
+				return;
+			}
+			intentos-=1;
 		}
 		
-		if(intentos==0) {perderJuego();}
-		
+		if(intentos==0 && !gano){
+			perderJuego();
+		}	
 	}
 	
 	public static Letra[] verificarLetra(String PalabraUsuario,String PalabraMaquina ){
@@ -78,13 +81,13 @@ public class Partida {
 		return true;
 	}
 	
-	public static void perderJuego() {
-		System.out.println("perdio");
+	public void perderJuego() {
+		System.out.println("Perdiste: " + palabra.toUpperCase());
 	}
 	
 	
 	public static void ganoJuego() {
-			System.out.println("gano");
+			System.out.println("Ganaste!");
 	}
 	
 	
