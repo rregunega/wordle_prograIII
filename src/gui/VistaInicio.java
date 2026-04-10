@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaInicio extends JPanel {
 
@@ -23,7 +25,7 @@ public class VistaInicio extends JPanel {
 
 		agregarPanelDeInstrucciones();
 
-		agregarBotonEmpezar();
+		agregarBotonEmpezar(frame);
 	}
 
 	private void agregarPanelDeInstrucciones() {
@@ -61,9 +63,18 @@ public class VistaInicio extends JPanel {
 		add(lblNewLabel);
 	}
 
-	private void agregarBotonEmpezar() {
+	private void agregarBotonEmpezar(Frame frame) {
 		JButton btnEmpezar = new JButton("Empezar");
+		btnEmpezar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();
 
+				Principal newframe = new Principal();
+				newframe.setVisible(true);
+			}
+		});
+		add(btnEmpezar);
+	
 		btnEmpezar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEmpezar.setFocusPainted(false);
 		btnEmpezar.setBorderPainted(false);
