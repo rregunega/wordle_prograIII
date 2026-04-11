@@ -7,7 +7,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Ventana extends JFrame {
+public class Ventana extends JFrame implements Navegable{
 	
 	// Agregado por autofix de Eclipse
 	private static final long serialVersionUID = 1L;
@@ -28,17 +28,18 @@ public class Ventana extends JFrame {
 		// Creo las vistas
 		cardPanel.add(new VistaInicio(this), "VistaInicio");
 		cardPanel.add(new VistaJuego(this), "VistaJuego");
-
 		add(cardPanel);
 
+		cardLayout.show(cardPanel, "VistaInicio");
 		setVisible(true);
 
 	}
 
 	// Método para alternar visibilidad de las vistas
-	public void alternarVista(String nombreVista) {
-		cardLayout.show(cardPanel, nombreVista);
-	}
+	@Override
+  public void cambiarVista(String nombreVista) {
+      cardLayout.show(cardPanel, nombreVista);
+  }
 
 }
 

@@ -17,8 +17,11 @@ import java.awt.event.ActionEvent;
 public class VistaInicio extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+  private Navegable navegable;
 
-	public VistaInicio() {
+	public VistaInicio(Navegable navegable) {
+		this.navegable = navegable;		
+		
 		setLayout(null);
 
 		agregarTitulo();
@@ -67,7 +70,7 @@ public class VistaInicio extends JPanel {
 		JButton btnEmpezar = new JButton("Empezar");
 		btnEmpezar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-        ventana.alternarVista("VistaJuego");
+        navegable.cambiarVista("VistaJuego");
 			}
 		});
 		add(btnEmpezar);
