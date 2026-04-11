@@ -27,7 +27,7 @@ public class Ventana extends JFrame {
 
 		// Creo las vistas
 		cardPanel.add(new VistaInicio(this), "VistaInicio");
-//		cardPanel.add(new Vista2(this), "VistaJuego");
+		cardPanel.add(new VistaJuego(this), "VistaJuego");
 
 		add(cardPanel);
 

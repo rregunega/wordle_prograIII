@@ -18,14 +18,14 @@ public class VistaInicio extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public VistaInicio(Frame frame) {
+	public VistaInicio() {
 		setLayout(null);
 
 		agregarTitulo();
 
 		agregarPanelDeInstrucciones();
 
-		agregarBotonEmpezar(frame);
+		agregarBotonEmpezar();
 	}
 
 	private void agregarPanelDeInstrucciones() {
@@ -63,14 +63,11 @@ public class VistaInicio extends JPanel {
 		add(lblNewLabel);
 	}
 
-	private void agregarBotonEmpezar(Frame frame) {
+	private void agregarBotonEmpezar() {
 		JButton btnEmpezar = new JButton("Empezar");
 		btnEmpezar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
-
-				Principal newframe = new Principal();
-				newframe.setVisible(true);
+        ventana.alternarVista("VistaJuego");
 			}
 		});
 		add(btnEmpezar);
