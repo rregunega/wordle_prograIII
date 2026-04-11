@@ -2,6 +2,7 @@ package gui;
 
 import static gui.ConfiguracionUI.*;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Frame;
@@ -67,6 +68,8 @@ public class VistaInicio extends JPanel {
 	}
 
 	private void agregarBotonEmpezar() {
+    Color colorBase = AZUL;
+    
 		JButton btnEmpezar = new JButton("Empezar");
 		btnEmpezar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -80,7 +83,7 @@ public class VistaInicio extends JPanel {
 		btnEmpezar.setBorderPainted(false);
 		btnEmpezar.setContentAreaFilled(false);
 		btnEmpezar.setOpaque(true);
-		btnEmpezar.setBackground(AZUL);
+		btnEmpezar.setBackground(colorBase);
 		btnEmpezar.setForeground(COLOR_TEXTO_CLARO);
 		btnEmpezar.setFont(FUENTE_BOTON);
 		btnEmpezar.setBounds(29, 489, 422, 50);
@@ -89,19 +92,19 @@ public class VistaInicio extends JPanel {
 		// Hover + Press effect
 		btnEmpezar.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(AZUL.brighter());
+				btnEmpezar.setBackground(colorBase.brighter());
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(AZUL);
+				btnEmpezar.setBackground(colorBase);
 			}
 
 			public void mousePressed(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(AZUL.darker());
+				btnEmpezar.setBackground(colorBase.darker());
 			}
 
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(AZUL.brighter());
+				btnEmpezar.setBackground(colorBase.brighter());
 			}
 		});
 

@@ -1,7 +1,16 @@
 package gui;
 
+import static gui.ConfiguracionUI.COLOR_TEXTO_CLARO;
+import static gui.ConfiguracionUI.FUENTE_BOTON;
 import static gui.ConfiguracionUI.FUENTE_TITULO;
+import static gui.ConfiguracionUI.VERDE;
 
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -49,6 +58,44 @@ public class VistaJuego extends JPanel {
 
 			panelJuego.add(fila);
 		}
+		
+    JButton btnEnviar = new JButton("Enviar intento ►");
+    Color colorBase = VERDE;
+    btnEnviar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    btnEnviar.setFocusPainted(false);
+    btnEnviar.setBorderPainted(false);
+    btnEnviar.setContentAreaFilled(false);
+    btnEnviar.setOpaque(true);
+    btnEnviar.setBackground(colorBase);
+    btnEnviar.setForeground(COLOR_TEXTO_CLARO);
+    btnEnviar.setFont(FUENTE_BOTON);
+    btnEnviar.setBounds(29, 530, 422, 50);
+    
+    btnEnviar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+        navegable.cambiarVista("VistaInicio");
+			}
+		});
+    
+    btnEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseEntered(java.awt.event.MouseEvent evt) {
+				btnEnviar.setBackground(colorBase.brighter());
+			}
+
+			public void mouseExited(java.awt.event.MouseEvent evt) {
+				btnEnviar.setBackground(colorBase);
+			}
+
+			public void mousePressed(java.awt.event.MouseEvent evt) {
+				btnEnviar.setBackground(colorBase.darker());
+			}
+
+			public void mouseReleased(java.awt.event.MouseEvent evt) {
+				btnEnviar.setBackground(colorBase.brighter());
+			}
+		});
+
+    add(btnEnviar);
 
 	}
 
