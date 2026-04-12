@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.text.PlainDocument;
 
 public class VistaJuego extends JPanel {
 
@@ -26,6 +27,7 @@ public class VistaJuego extends JPanel {
 	private final int FILAS = 6; // Igual a la cantidad de intentos
 
 	private JTextField[][] grilla = new JTextField[FILAS][COLUMNAS];
+	int filaActual=0;
 
 	public VistaJuego(Navegable navegable) {
 		this.navegable = navegable;
@@ -38,22 +40,27 @@ public class VistaJuego extends JPanel {
 		panelJuego.setBounds(29, 82, 422, 422);
 		panelJuego.setLayout(null);
 		add(panelJuego);
-
-		for (int i = 0; i < FILAS; i++) {
+		
+		//f=filas, c=columnas
+		for (int f = 0; f < FILAS; f++) {
 			JPanel fila = new JPanel();
 			fila.setLayout(null);
-			fila.setBounds(10, 10 + i * 65, 402, 60);
+			fila.setBounds(10, 10 + f * 65, 402, 60);
 
-			JLabel lblIntento = new JLabel("Intento " + (i + 1));
+			JLabel lblIntento = new JLabel("Intento " + (f + 1));
 			lblIntento.setBounds(10, 23, 80, 14);
 			fila.add(lblIntento);
 
-			for (int j = 0; j < COLUMNAS; j++) {
-				JTextField txt = new JTextField();
-				txt.setBounds(97 + j * 56, 11, 46, 39);
-				fila.add(txt);
-
-				grilla[i][j] = txt;
+			for (int c = 0; c < COLUMNAS; c++) {
+				JTextField entradaUsuario = new JTextField();
+				PlainDocument documento= (PlainDocument) entradaUsuario.getDocument();
+				documento.setDocumentFilter(new ManejadorCaracteres());
+				entradaUsuario.setBounds(97 + c * 56, 11, 46, 39);
+				if (f > filaActual) {
+					entradaUsuario.setEnabled(false);		        }
+				fila.add(entradaUsuario);
+				
+				grilla[f][c] = entradaUsuario;
 			}
 
 			panelJuego.add(fila);
@@ -73,7 +80,11 @@ public class VistaJuego extends JPanel {
     
     btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-        navegable.cambiarVista("VistaInicio");
+				if(filaActual<FILAS-1) { filaActual++;}
+				for (int c = 0; c < COLUMNAS; c++) {
+					grilla[filaActual-1][c].setEnabled(false);
+					grilla[filaActual][c].setEnabled(true);
+				}
 			}
 		});
     
