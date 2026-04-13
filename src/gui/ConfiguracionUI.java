@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.InputStream;
 
 import javax.swing.UIManager;
 
@@ -28,6 +29,20 @@ public class ConfiguracionUI {
 	public static final Color CLARO = new Color(248, 249, 250);
 	public static final Color OSCURO = new Color(33, 37, 41);
 
+	public static Font fuenteTTFTitulo =
+		    cargarFuenteBase("/recursosUtilizados/recursosVistaInicio/fuentes/Classyvogueregular.ttf");
+
+    private static Font cargarFuenteBase(String ruta) {
+    	
+        try {
+            InputStream is = ConfiguracionUI.class.getResourceAsStream(ruta);
+            return Font.createFont(Font.TRUETYPE_FONT, is);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Font("Segoe UI", Font.PLAIN, 12);
+        }
+    }
+		
 	// Fuentes
 	public static final Font FUENTE_TITULO = new Font("Segoe UI", Font.BOLD, 24);
 	public static final Font FUENTE_SUBTITULO = new Font("Segoe UI", Font.BOLD, 20);
