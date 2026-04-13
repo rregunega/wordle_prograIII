@@ -1,9 +1,9 @@
 package gui;
 
 import java.awt.Color;
+
 import java.awt.Font;
 import java.io.InputStream;
-
 import javax.swing.UIManager;
 
 public class ConfiguracionUI {
@@ -31,20 +31,6 @@ public class ConfiguracionUI {
 	
 	public static final Color COLOR_BOTON_VIOLETA = new Color(190, 116, 252);
 	public static final Color COLOR_BOTON_VIOLETA_PERMANECE = new Color(170, 100, 230);
-
-	public static Font fuenteTTFTitulo =
-		    cargarFuenteBase("/recursosUtilizados/recursosVistaInicio/fuentes/Classyvogueregular.ttf");
-
-    private static Font cargarFuenteBase(String ruta) {
-    	
-        try {
-            InputStream is = ConfiguracionUI.class.getResourceAsStream(ruta);
-            return Font.createFont(Font.TRUETYPE_FONT, is);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Font("Segoe UI", Font.PLAIN, 12);
-        }
-    }
 		
 	// Fuentes
 	public static final Font FUENTE_TITULO = new Font("Segoe UI", Font.BOLD, 24);
@@ -52,6 +38,24 @@ public class ConfiguracionUI {
 	public static final Font FUENTE_TEXTO = new Font("Segoe UI", Font.PLAIN, 16);
 	public static final Font FUENTE_BOTON = new Font("Segoe UI", Font.BOLD, 18);
 	
+	public static Font fuenteTTFTitulo =
+		    cargarFuenteInicio("/recursosUtilizados/recursosVistaInicio/fuentes/Classyvogueregular.ttf");
+
+    private static Font cargarFuenteInicio(String ruta) {	
+    	 try (InputStream fuente = ConfiguracionUI.class.getResourceAsStream(ruta)) {
+    	        if (fuente == null) {
+    	            throw new IllegalArgumentException("No se encontró la fuente: " + ruta);
+    	        }
+    	        return Font.createFont(Font.TRUETYPE_FONT, fuente);
+    	        
+    	    } catch (Exception e) {
+    	        System.err.println("Error cargando fuentes: " + e.getMessage());
+    	        e.printStackTrace();
+
+    	        return new Font("Segoe UI", Font.PLAIN, 12);
+    	    }
+    }
+    
 	public static void setearLookAndFeel() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -2,6 +2,7 @@ package gui;
 
 import static gui.ConfiguracionUI.*;
 
+
 import java.awt.Color;
 import java.awt.Cursor;
 
@@ -21,20 +22,20 @@ public class VistaInicio extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Navegable navegable;
-	private Image fondo;
+	private Image fondoInicio;
 
 	public VistaInicio(Navegable navegable) {
 		this.navegable = navegable;
 
-		cargarFondo();
-
 		setLayout(null);
+		
+		agregarFondoInicio();
 
 		agregarIconoWordle();
 
 		agregarTitulo();
 
-		agregarBotonEmpezar();
+		agregarBotonJugar();
 
 		agregarBotonInstrucciones();
 
@@ -59,7 +60,7 @@ public class VistaInicio extends JPanel {
 
 	private void agregarTitulo() {
 		JLabel tituloLabel = new JLabel("Wordle");
-		tituloLabel.setFont(FUENTE_TITULO);
+		//tituloLabel.setFont(FUENTE_TITULO);
 		tituloLabel.setFont(fuenteTTFTitulo.deriveFont(60f));
 		tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		tituloLabel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -67,7 +68,7 @@ public class VistaInicio extends JPanel {
 		add(tituloLabel);
 	}
 
-	private void agregarBotonEmpezar() {
+	private void agregarBotonJugar() {
 		Color colorBase = COLOR_BOTON_VIOLETA;
 		Color colorPermanece = COLOR_BOTON_VIOLETA_PERMANECE;
 
@@ -79,40 +80,40 @@ public class VistaInicio extends JPanel {
 		subtitulo.setBounds(10, 289, 458, 73);
 		add(subtitulo);
 
-		JButton btnEmpezar = new JButton("Empezar");
-		btnEmpezar.setBounds(188, 379, 112, 46);
-		add(btnEmpezar);
-		btnEmpezar.addActionListener(new ActionListener() {
+		JButton btnJugar = new JButton("Jugar");
+		btnJugar.setBounds(188, 379, 112, 46);
+		add(btnJugar);
+		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				navegable.cambiarVista("VistaJuego");
 			}
 		});
 
-		btnEmpezar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnEmpezar.setFocusPainted(false);
-		btnEmpezar.setBorderPainted(false);
-		btnEmpezar.setContentAreaFilled(false);
-		btnEmpezar.setOpaque(true);
-		btnEmpezar.setBackground(COLOR_BOTON_VIOLETA);
-		btnEmpezar.setForeground(CLARO);
-		btnEmpezar.setFont(FUENTE_BOTON);
+		btnJugar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnJugar.setFocusPainted(false);
+		btnJugar.setBorderPainted(false);
+		btnJugar.setContentAreaFilled(false);
+		btnJugar.setOpaque(true);
+		btnJugar.setBackground(COLOR_BOTON_VIOLETA);
+		btnJugar.setForeground(CLARO);
+		btnJugar.setFont(FUENTE_BOTON);
 
 		// Hover + Press effect
-		btnEmpezar.addMouseListener(new java.awt.event.MouseAdapter() {
+		btnJugar.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(colorPermanece);
+				btnJugar.setBackground(colorPermanece);
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(colorBase);
+				btnJugar.setBackground(colorBase);
 			}
 
 			public void mousePressed(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(colorBase.darker());
+				btnJugar.setBackground(colorBase.darker());
 			}
 
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(colorBase);
+				btnJugar.setBackground(colorBase);
 			}
 		});
 	}
@@ -173,8 +174,8 @@ public class VistaInicio extends JPanel {
 		}
 	}
 
-	private void cargarFondo() {
-		fondo = new ImageIcon(
+	private void agregarFondoInicio() {
+		fondoInicio = new ImageIcon(
 				getClass().getResource("/recursosUtilizados/recursosVistaInicio/wallpaper/wallpaperClaro.jpg"))
 				.getImage();
 	}
@@ -182,7 +183,7 @@ public class VistaInicio extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
+		g.drawImage(fondoInicio, 0, 0, getWidth(), getHeight(), this);
 
 		setOpaque(false);
 	}

@@ -28,6 +28,7 @@ public class Ventana extends JFrame implements Navegable{
 		// Creo las vistas
 		cardPanel.add(new VistaInicio(this), "VistaInicio");
 		cardPanel.add(new VistaJuego(this), "VistaJuego");
+		cardPanel.add(new VistaInstrucciones(this), "VistaInstrucciones");
 		add(cardPanel);
 
 		cardLayout.show(cardPanel, "VistaInicio");
