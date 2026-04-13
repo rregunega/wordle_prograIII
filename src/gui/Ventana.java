@@ -16,7 +16,7 @@ public class Ventana extends JFrame implements Navegable{
 	private JPanel cardPanel = new JPanel();
 
 	public Ventana() {
-		//setTitle("W-UNGS-dle!");
+		setTitle("W-UNGS-dle!");
 		setBackground(COLOR_FONDO_PRIMARIO);
 		setSize(500, 647); // Medidas de la ventana
 		setLocationRelativeTo(null); // Centro la ventana en la pantalla

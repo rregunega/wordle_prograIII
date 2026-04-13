@@ -28,6 +28,9 @@ public class ConfiguracionUI {
 	public static final Color CYAN = new Color(13, 202, 240);
 	public static final Color CLARO = new Color(248, 249, 250);
 	public static final Color OSCURO = new Color(33, 37, 41);
+	
+	public static final Color COLOR_BOTON_VIOLETA = new Color(190, 116, 252);
+	public static final Color COLOR_BOTON_VIOLETA_PERMANECE = new Color(170, 100, 230);
 
 	public static Font fuenteTTFTitulo =
 		    cargarFuenteBase("/recursosUtilizados/recursosVistaInicio/fuentes/Classyvogueregular.ttf");

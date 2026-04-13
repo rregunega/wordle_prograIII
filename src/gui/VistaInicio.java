@@ -3,14 +3,12 @@ package gui;
 import static gui.ConfiguracionUI.*;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
@@ -32,9 +30,9 @@ public class VistaInicio extends JPanel {
 
 		setLayout(null);
 
-		agregarTitulo();
+		agregarIconoWordle();
 
-		agregarPanelDeInstrucciones();
+		agregarTitulo();
 
 		agregarBotonEmpezar();
 
@@ -42,56 +40,47 @@ public class VistaInicio extends JPanel {
 
 	}
 
-	private void agregarPanelDeInstrucciones() {
-		JPanel panelInstrucciones = new JPanel();
-		panelInstrucciones.setBorder(new LineBorder(COLOR_ACENTO, 2, true));
-		panelInstrucciones.setBounds(26, 347, 422, 252);
-		panelInstrucciones.setLayout(null);
-		panelInstrucciones.setBackground(COLOR_FONDO_SECUNDARIO);
-		add(panelInstrucciones);
+	private void agregarIconoWordle() {
 
-		JLabel lblComoJugar = new JLabel("Cómo Jugar");
-		lblComoJugar.setFont(FUENTE_SUBTITULO);
-		lblComoJugar.setBounds(10, 11, 168, 37);
-		panelInstrucciones.add(lblComoJugar);
+		JLabel lblNewLabel = new JLabel("");
+		ImageIcon iconWordle = new ImageIcon(
+				VistaInicio.class.getResource("/recursosUtilizados/recursosVistaInicio/icons/wordleIcono.png"));
 
-		JLabel lblInstruccioens = new JLabel(
-				"<html><p>Adivina la palabra secreta de 5 letras. Tienes 6 intentos para acertar. Después de cada intento, los colores te darán pistas:"
-						+ "<ul><li>Verde: Letra correcta en la posición correcta</li>"
-						+ "<li>Amarillo: Letra correcta pero en posición incorrecta</li>"
-						+ "<li>Gris: Letra no está en la palabra</li></ul>" + "</html>");
-		lblInstruccioens.setAlignmentY(Component.TOP_ALIGNMENT);
-		lblInstruccioens.setVerticalTextPosition(SwingConstants.TOP);
-		lblInstruccioens.setVerticalAlignment(SwingConstants.TOP);
-		lblInstruccioens.setFont(FUENTE_TEXTO);
-		lblInstruccioens.setBounds(20, 59, 377, 245);
-		panelInstrucciones.add(lblInstruccioens);
+		Image iconTamaño = iconWordle.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+
+		ImageIcon iconNuevo = new ImageIcon(iconTamaño);
+
+		lblNewLabel.setIcon(iconNuevo);
+		lblNewLabel.setBounds(215, 149, 66, 59);
+
+		add(lblNewLabel);
+
 	}
 
 	private void agregarTitulo() {
 		JLabel tituloLabel = new JLabel("Wordle");
-		tituloLabel.setForeground(new Color(0, 0, 0));
+		tituloLabel.setFont(FUENTE_TITULO);
 		tituloLabel.setFont(fuenteTTFTitulo.deriveFont(60f));
 		tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		tituloLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		tituloLabel.setBounds(10, 126, 464, 59);
+		tituloLabel.setBounds(10, 219, 464, 59);
 		add(tituloLabel);
 	}
 
 	private void agregarBotonEmpezar() {
-		Color colorBase = new Color(190, 116, 252);
-		Color colorEncima = new Color(170, 100, 230);
+		Color colorBase = COLOR_BOTON_VIOLETA;
+		Color colorPermanece = COLOR_BOTON_VIOLETA_PERMANECE;
 
 		JLabel subtitulo = new JLabel("<html><div style='text-align:center;'>" + "Ten 6 oportunidades de adivinar<br>"
 				+ "la palabra de 5 letras." + "</div></html>");
 		subtitulo.setForeground(new Color(0, 0, 0));
 		subtitulo.setFont(new Font("Bookman Old Style", Font.ITALIC, 18));
 		subtitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		subtitulo.setBounds(10, 196, 458, 73);
+		subtitulo.setBounds(10, 289, 458, 73);
 		add(subtitulo);
 
 		JButton btnEmpezar = new JButton("Empezar");
-		btnEmpezar.setBounds(178, 277, 112, 47);
+		btnEmpezar.setBounds(188, 379, 112, 46);
 		add(btnEmpezar);
 		btnEmpezar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -104,14 +93,14 @@ public class VistaInicio extends JPanel {
 		btnEmpezar.setBorderPainted(false);
 		btnEmpezar.setContentAreaFilled(false);
 		btnEmpezar.setOpaque(true);
-		btnEmpezar.setBackground(new Color(190, 116, 252));
-		btnEmpezar.setForeground(new Color(255, 255, 255));
+		btnEmpezar.setBackground(COLOR_BOTON_VIOLETA);
+		btnEmpezar.setForeground(CLARO);
 		btnEmpezar.setFont(FUENTE_BOTON);
 
 		// Hover + Press effect
 		btnEmpezar.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(colorEncima);
+				btnEmpezar.setBackground(colorPermanece);
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -123,7 +112,7 @@ public class VistaInicio extends JPanel {
 			}
 
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				btnEmpezar.setBackground(colorBase.brighter());
+				btnEmpezar.setBackground(colorBase);
 			}
 		});
 	}
@@ -139,7 +128,7 @@ public class VistaInicio extends JPanel {
 		Image iconTamañoOriginal = iconOriginal.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		Image iconTamañoEncima = iconEncima.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 		Image iconTamañoClick = iconClick.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-			
+
 		ImageIcon iconNuevo = new ImageIcon(iconTamañoOriginal);
 		ImageIcon iconPermanece = new ImageIcon(iconTamañoEncima);
 		ImageIcon iconPresinado = new ImageIcon(iconTamañoClick);
@@ -147,7 +136,7 @@ public class VistaInicio extends JPanel {
 		JButton btnInstrucciones = new JButton();
 
 		btnInstrucciones.setIcon(iconNuevo);
-		btnInstrucciones.setBounds(300, 280, 40, 40);
+		btnInstrucciones.setBounds(310, 385, 33, 38);
 
 		btnInstrucciones.setBorderPainted(false);
 		btnInstrucciones.setContentAreaFilled(false);
@@ -155,29 +144,33 @@ public class VistaInicio extends JPanel {
 		btnInstrucciones.setOpaque(false);
 		btnInstrucciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				navegable.cambiarVista("VistaInstrucciones");
 			}
 		});
 		add(btnInstrucciones);
 		btnInstrucciones.setDoubleBuffered(true);
 		btnInstrucciones.setActionCommand("Intrucciones");
-		
-		btnInstrucciones.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		        btnInstrucciones.setIcon(iconPermanece);
-		    }
+		{
 
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		        btnInstrucciones.setIcon(iconNuevo);
-		    }
+			btnInstrucciones.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseEntered(java.awt.event.MouseEvent evt) {
+					btnInstrucciones.setIcon(iconPermanece);
+				}
 
-		    public void mousePressed(java.awt.event.MouseEvent evt) {
-		        btnInstrucciones.setIcon(iconPresinado);
-		    }
+				public void mouseExited(java.awt.event.MouseEvent evt) {
+					btnInstrucciones.setIcon(iconNuevo);
+				}
 
-		    public void mouseReleased(java.awt.event.MouseEvent evt) {
-		        btnInstrucciones.setIcon(iconPermanece);
-		    }
-		});
+				public void mousePressed(java.awt.event.MouseEvent evt) {
+					btnInstrucciones.setIcon(iconPresinado);
+				}
+
+				public void mouseReleased(java.awt.event.MouseEvent evt) {
+					btnInstrucciones.setIcon(iconPermanece);
+				}
+			});
+
+		}
 	}
 
 	private void cargarFondo() {

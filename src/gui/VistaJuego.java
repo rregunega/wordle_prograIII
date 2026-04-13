@@ -1,6 +1,7 @@
 package gui;
 
 import static gui.ConfiguracionUI.COLOR_TEXTO_CLARO;
+
 import static gui.ConfiguracionUI.FUENTE_BOTON;
 import static gui.ConfiguracionUI.FUENTE_TITULO;
 import static gui.ConfiguracionUI.VERDE;
