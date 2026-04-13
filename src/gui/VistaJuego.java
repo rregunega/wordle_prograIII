@@ -2,9 +2,14 @@ package gui;
 
 import static gui.ConfiguracionUI.COLOR_TEXTO_CLARO;
 
+
 import static gui.ConfiguracionUI.FUENTE_BOTON;
 import static gui.ConfiguracionUI.FUENTE_TITULO;
-import static gui.ConfiguracionUI.VERDE;
+import static gui.ConfiguracionUI.FUENTE_TEXTO_JUEGO;
+import static gui.ConfiguracionUI.COLOR_BOTON_VIOLETA;
+import static gui.ConfiguracionUI.COLOR_BOTON_VIOLETA_PERMANECE;
+import static gui.ConfiguracionUI.BORDE_ENTRADA_TEXTO;
+import static gui.ConfiguracionUI.GRAY;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -34,19 +39,22 @@ public class VistaJuego extends JPanel {
 		this.navegable = navegable;
 
 		setLayout(null);
+		
+		revalidate();
+		repaint();
 
 		agregarTitulo("W-UNGS-dle jugando");
 
 		JPanel panelJuego = new JPanel();
-		panelJuego.setBounds(29, 82, 422, 422);
+		panelJuego.setBounds(29, 82, 422, 410);
 		panelJuego.setLayout(null);
 		add(panelJuego);
 		
-		//f=filas, c=columnas
+//		//f=filas, c=columnas
 		for (int f = 0; f < FILAS; f++) {
 			JPanel fila = new JPanel();
 			fila.setLayout(null);
-			fila.setBounds(10, 10 + f * 65, 402, 60);
+			fila.setBounds(10, 10 + f * 62, 402, 62);
 
 			JLabel lblIntento = new JLabel("Intento " + (f + 1));
 			lblIntento.setBounds(10, 23, 80, 14);
@@ -54,9 +62,14 @@ public class VistaJuego extends JPanel {
 
 			for (int c = 0; c < COLUMNAS; c++) {
 				JTextField entradaUsuario = new JTextField();
+				Color colorBase = GRAY;
 				PlainDocument documento= (PlainDocument) entradaUsuario.getDocument();
 				documento.setDocumentFilter(new ManejadorCaracteres());
-				entradaUsuario.setBounds(97 + c * 56, 11, 46, 39);
+				entradaUsuario.setBounds(97 + c * 54, 6, 50, 50);
+				entradaUsuario.setForeground(colorBase);
+				entradaUsuario.setBorder(BORDE_ENTRADA_TEXTO);
+				entradaUsuario.setFont(FUENTE_TEXTO_JUEGO);
+				entradaUsuario.setHorizontalAlignment(JTextField.CENTER); 
 				if (f > filaActual) {
 					entradaUsuario.setEnabled(false);		        }
 				fila.add(entradaUsuario);
@@ -68,7 +81,8 @@ public class VistaJuego extends JPanel {
 		}
 		
     JButton btnEnviar = new JButton("Enviar intento ►");
-    Color colorBase = VERDE;
+    Color colorBase = COLOR_BOTON_VIOLETA;
+    Color colorPermanece = COLOR_BOTON_VIOLETA_PERMANECE;
     btnEnviar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     btnEnviar.setFocusPainted(false);
     btnEnviar.setBorderPainted(false);
@@ -77,7 +91,7 @@ public class VistaJuego extends JPanel {
     btnEnviar.setBackground(colorBase);
     btnEnviar.setForeground(COLOR_TEXTO_CLARO);
     btnEnviar.setFont(FUENTE_BOTON);
-    btnEnviar.setBounds(29, 530, 422, 50);
+    btnEnviar.setBounds(29, 503, 422, 50);
     
     btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +105,7 @@ public class VistaJuego extends JPanel {
     
     btnEnviar.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
-				btnEnviar.setBackground(colorBase.brighter());
+				btnEnviar.setBackground(colorPermanece);
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
@@ -103,7 +117,7 @@ public class VistaJuego extends JPanel {
 			}
 
 			public void mouseReleased(java.awt.event.MouseEvent evt) {
-				btnEnviar.setBackground(colorBase.brighter());
+				btnEnviar.setBackground(colorBase);
 			}
 		});
 
@@ -119,5 +133,4 @@ public class VistaJuego extends JPanel {
 		lblNewLabel.setBounds(10, 36, 464, 47);
 		add(lblNewLabel);
 	}
-
 }

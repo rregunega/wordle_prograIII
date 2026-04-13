@@ -6,8 +6,7 @@ import static gui.ConfiguracionUI.COLOR_BOTON_VIOLETA;
 import static gui.ConfiguracionUI.COLOR_BOTON_VIOLETA_PERMANECE;
 import static gui.ConfiguracionUI.COLOR_FONDO_SECUNDARIO;
 import static gui.ConfiguracionUI.FUENTE_BOTON;
-import static gui.ConfiguracionUI.FUENTE_TEXTO;
-import static gui.ConfiguracionUI.fuenteTTFTitulo;
+import static gui.ConfiguracionUI.FUENTE_TEXTO_INSTRUCCIONES;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -67,7 +66,7 @@ public class VistaInstrucciones extends JPanel {
 		lblInstruccioens.setAlignmentY(Component.TOP_ALIGNMENT);
 		lblInstruccioens.setVerticalTextPosition(SwingConstants.TOP);
 		lblInstruccioens.setVerticalAlignment(SwingConstants.TOP);
-		lblInstruccioens.setFont(FUENTE_TEXTO);
+		lblInstruccioens.setFont(FUENTE_TEXTO_INSTRUCCIONES);
 		lblInstruccioens.setBounds(20, 59, 377, 245);
 		panelInstrucciones.add(lblInstruccioens);
 	}

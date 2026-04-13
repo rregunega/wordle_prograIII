@@ -2,7 +2,10 @@ package gui;
 
 import java.awt.Color;
 
+
 import java.awt.Font;
+import javax.swing.border.Border;
+import javax.swing.BorderFactory;
 import java.io.InputStream;
 import javax.swing.UIManager;
 
@@ -28,6 +31,7 @@ public class ConfiguracionUI {
 	public static final Color CYAN = new Color(13, 202, 240);
 	public static final Color CLARO = new Color(248, 249, 250);
 	public static final Color OSCURO = new Color(33, 37, 41);
+	public static final Color GRAY = new Color(128, 128, 128);
 	
 	public static final Color COLOR_BOTON_VIOLETA = new Color(190, 116, 252);
 	public static final Color COLOR_BOTON_VIOLETA_PERMANECE = new Color(170, 100, 230);
@@ -35,8 +39,11 @@ public class ConfiguracionUI {
 	// Fuentes
 	public static final Font FUENTE_TITULO = new Font("Segoe UI", Font.BOLD, 24);
 	public static final Font FUENTE_SUBTITULO = new Font("Segoe UI", Font.BOLD, 20);
-	public static final Font FUENTE_TEXTO = new Font("Segoe UI", Font.PLAIN, 16);
+	public static final Font FUENTE_TEXTO_JUEGO = new Font("Arial", Font.BOLD, 25);
+	public static final Font FUENTE_TEXTO_INSTRUCCIONES = new Font("Segoe UI", Font.PLAIN, 16);
 	public static final Font FUENTE_BOTON = new Font("Segoe UI", Font.BOLD, 18);
+	
+	public static final Border BORDE_ENTRADA_TEXTO = BorderFactory.createLineBorder(Color.GRAY.brighter(), 2);
 	
 	public static Font fuenteTTFTitulo =
 		    cargarFuenteInicio("/recursosUtilizados/recursosVistaInicio/fuentes/Classyvogueregular.ttf");
