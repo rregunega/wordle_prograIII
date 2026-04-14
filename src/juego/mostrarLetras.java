@@ -2,7 +2,7 @@ package juego;
 
 public class mostrarLetras {
 
-	static String[] marcarCasillas(String usuario, String palabraSecreta) {
+	public static String[] marcarCasillas(String usuario, String palabraSecreta) {
 
 		String[] colorFinal = new String[5];
 

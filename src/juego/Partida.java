@@ -7,7 +7,7 @@ public class Partida {
 	boolean gano = false;
 	int intentos = 5;
 	lector_palabras palabras = new lector_palabras();
-	String palabra = palabras.devolverPalabra().toLowerCase();
+	public String palabra = palabras.devolverPalabra().toLowerCase();
 	String entrada;
 	Scanner sc;
 

@@ -6,8 +6,8 @@ public class Letra {
 	char letra;
 
 	public Letra(char usuario, String estado) {
-		this.letra=usuario;
-		this.estado=estado;
-		
+		this.letra = usuario;
+		this.estado = estado;
+
 	}
 }
