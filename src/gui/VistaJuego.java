@@ -29,7 +29,7 @@ import javax.swing.text.PlainDocument;
 import juego.Estado;
 import juego.Letra;
 import juego.Partida;
-import juego.mostrarLetras;
+
 
 public class VistaJuego extends JPanel {
 
@@ -214,7 +214,6 @@ public class VistaJuego extends JPanel {
 	private void validarFilaActual() {
 	    int letrasEnPantalla = 0;
 	    for (int c = 0; c < COLUMNAS; c++) {
-	        // No importa qué pasó antes, miramos qué hay AHORA
 	        if (!grilla[filaActual][c].getText().trim().isEmpty()) {
 	            letrasEnPantalla++;
 	        }

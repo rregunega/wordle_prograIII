@@ -43,22 +43,30 @@ public class Partida {
 	public Letra[] verificarLetra(String PalabraUsuario) {
 		String PalabraMaquina=this.palabra;
 		Letra[] letras = new Letra[5];
-
+		
 		for (int indice = 0; indice < PalabraUsuario.length(); indice++) {
-
 			char usuario = PalabraUsuario.charAt(indice);
 			char maquina = PalabraMaquina.charAt(indice);
-
-			if (PalabraMaquina.contains(String.valueOf(usuario))) {
+			
 				if (usuario == maquina) {
 					letras[indice] = new Letra(usuario, Estado.VERDE);
-					continue;
-				} else {
-					letras[indice] = new Letra(usuario, Estado.AMARILLO);
+					PalabraMaquina=PalabraMaquina.replaceFirst(String.valueOf(maquina)," " );
+					System.out.println("agregado");
 					continue;
 				}
-			}
+		}
 
+		for (int indice = 0; indice < PalabraUsuario.length(); indice++) {
+			
+			char usuario = PalabraUsuario.charAt(indice);
+			
+			
+			if(letras[indice] != null) {continue;}
+			if (PalabraMaquina.contains(String.valueOf(usuario))) {
+					letras[indice] = new Letra(usuario, Estado.AMARILLO);
+					PalabraMaquina=PalabraMaquina.replaceFirst(String.valueOf(usuario)," " );
+					continue;
+				}
 			letras[indice] = new Letra(usuario, Estado.GRIS);
 			continue;
 
