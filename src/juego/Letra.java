@@ -8,6 +8,14 @@ public class Letra {
 	public Letra(char usuario, String estado) {
 		this.letra = usuario;
 		this.estado = estado;
-
 	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public char getLetra() {
+		return letra;
+	}
+	
 }

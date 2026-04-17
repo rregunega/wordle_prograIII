@@ -1,8 +1,5 @@
 package gui;
-
 import java.awt.Color;
-
-
 import java.awt.Font;
 import javax.swing.border.Border;
 import javax.swing.BorderFactory;
@@ -69,7 +66,7 @@ public class ConfiguracionUI {
     
 	public static void setearLookAndFeel() {
 		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

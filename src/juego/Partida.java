@@ -7,12 +7,12 @@ public class Partida {
 	boolean gano = false;
 	int intentos = 5;
 	lector_palabras palabras = new lector_palabras();
-	public String palabra = palabras.devolverPalabra().toLowerCase();
+	public String palabra;
 	String entrada;
 	Scanner sc;
 
 	public Partida() {
-		palabra = palabras.devolverPalabra().toLowerCase();
+		this.palabra = palabras.devolverPalabra().toUpperCase();
 		sc = new Scanner(System.in);
 	}
 
@@ -20,7 +20,7 @@ public class Partida {
 
 		while (intentos > 0 && !gano) {
 			System.out.println("ingrese una palabra de cinco letras maximo");
-			entrada = sc.nextLine().toLowerCase();
+			entrada = sc.nextLine().toUpperCase();
 
 			if (!verificarPalabra()) {
 				continue;
@@ -40,7 +40,8 @@ public class Partida {
 		}
 	}
 
-	public static Letra[] verificarLetra(String PalabraUsuario, String PalabraMaquina) {
+	public Letra[] verificarLetra(String PalabraUsuario) {
+		String PalabraMaquina=this.palabra;
 		Letra[] letras = new Letra[5];
 
 		for (int indice = 0; indice < PalabraUsuario.length(); indice++) {
@@ -48,7 +49,7 @@ public class Partida {
 			char usuario = PalabraUsuario.charAt(indice);
 			char maquina = PalabraMaquina.charAt(indice);
 
-			if (PalabraMaquina.toLowerCase().contains(String.valueOf(usuario))) {
+			if (PalabraMaquina.contains(String.valueOf(usuario))) {
 				if (usuario == maquina) {
 					letras[indice] = new Letra(usuario, Estado.VERDE);
 					continue;
@@ -67,7 +68,7 @@ public class Partida {
 	}
 
 	private boolean palabraEQentrada() {
-		if (palabra.toLowerCase().equals(entrada)) {
+		if (palabra.equals(entrada)) {
 			this.gano = true;
 			return true;
 		}
@@ -83,7 +84,7 @@ public class Partida {
 	}
 
 	public void perderJuego() {
-		System.out.println("Perdiste: " + palabra.toUpperCase());
+		System.out.println("Perdiste: " + palabra);
 	}
 
 	public static void ganoJuego() {
