@@ -1,7 +1,7 @@
 package juego;
 
-public class Estado {
-	public static final String VERDE="verde";
-	public static final String AMARILLO="amarillo";
-	public static final String GRIS="gris";
+public enum EstadoPalabra {
+	CORRECTA,    // Verde (Letra correcta, posición correcta)
+    DESPLAZADA,  // Amarillo (Letra existe, pero en otra posición)
+    INCORRECTA   // Gris (No existe en la palabra)
 }

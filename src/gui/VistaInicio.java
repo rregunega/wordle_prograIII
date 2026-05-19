@@ -26,34 +26,24 @@ public class VistaInicio extends JPanel {
 
 	public VistaInicio(Navegable navegable) {
 		this.navegable = navegable;
-
 		setLayout(null);
-		
 		agregarFondoInicio();
-
 		agregarIconoWordle();
-
 		agregarTitulo();
-
 		agregarBotonJugar();
-
 		agregarBotonInstrucciones();
-
 	}
 
 	private void agregarIconoWordle() {
 
 		JLabel lblNewLabel = new JLabel("");
 		ImageIcon iconWordle = new ImageIcon(
-				VistaInicio.class.getResource("/recursosUtilizados/recursosVistaInicio/icons/wordleIcono.png"));
-
+		VistaInicio.class.getResource("/recursosUtilizados/recursosVistaInicio/icons/wordleIcono.png"));
 		Image iconTamaño = iconWordle.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-
 		ImageIcon iconNuevo = new ImageIcon(iconTamaño);
 
 		lblNewLabel.setIcon(iconNuevo);
 		lblNewLabel.setBounds(215, 149, 66, 59);
-
 		add(lblNewLabel);
 
 	}

@@ -26,7 +26,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.PlainDocument;
 
-import juego.Estado;
+import juego.EstadoPalabra;
 import juego.Letra;
 import juego.Partida;
 
@@ -42,18 +42,15 @@ public class VistaJuego extends JPanel {
 	private JButton btnEnviar = new JButton("Enviar intento");
 	private JTextField[][] grilla = new JTextField[FILAS][COLUMNAS];
 	private int filaActual = 0;
+	private Navegable navegable;
 	
 
 	public VistaJuego(Navegable navegable) {
-	
+		this.navegable = navegable;
 		partida = new Partida();
-		
 		setLayout(null);
-
 		revalidate();
-		
 		repaint();
-
 		agregarTitulo("W-UNGS-dle jugando");
 
 		JPanel panelJuego = new JPanel();
@@ -154,13 +151,13 @@ public class VistaJuego extends JPanel {
 
 		for (int col = 0; col < COLUMNAS; col++) {
 
-			String estado = colorFinal[col].getEstado();
+			EstadoPalabra estado = colorFinal[col].getEstado();
 
-			if (estado.equals(Estado.VERDE)) {
+			if (estado.equals(EstadoPalabra.CORRECTA)) {
 
 				grilla[fila][col].setBackground(COLOR_CELDA_VERDE);
 
-			} else if (estado.equals(Estado.AMARILLO)) {
+			} else if (estado.equals(EstadoPalabra.DESPLAZADA)) {
 
 				grilla[fila][col].setBackground(COLOR_CELDA_AMARILLO);
 
@@ -183,11 +180,10 @@ public class VistaJuego extends JPanel {
 	private void procesarIntento() {
 		
 		String usuario = obtenerEntradaUsuario();
-		String palabraSecreta = partida.palabra;
-		System.out.println(palabraSecreta);
-		
+		if(partida.palabraEQentrada(usuario)) {navegable.cambiarVista("VistaGanador");};
 		Letra[] colorFinal = partida.verificarLetra(usuario);
 		pintarFila(colorFinal, filaActual);
+		
 	
 		if (filaActual < FILAS - 1) {
 			filaActual++;

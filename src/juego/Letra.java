@@ -2,15 +2,15 @@ package juego;
 
 public class Letra {
 
-	String estado;
+	EstadoPalabra estado;
 	char letra;
 
-	public Letra(char usuario, String estado) {
+	public Letra(char usuario, EstadoPalabra estado) {
 		this.letra = usuario;
 		this.estado = estado;
 	}
 	
-	public String getEstado() {
+	public EstadoPalabra getEstado() {
 		return estado;
 	}
 
