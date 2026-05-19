@@ -111,8 +111,9 @@ public class VistaJuego extends JPanel {
 		btnEnviar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				
 				procesarIntento();
+				gano();
+				perdio();
 				btnEnviar.setEnabled(false);}}
 			);
 		
@@ -142,10 +143,7 @@ public class VistaJuego extends JPanel {
 
 	}
 
-	protected void nada() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	private void pintarFila(Letra[] colorFinal, int fila) {
 
@@ -176,11 +174,14 @@ public class VistaJuego extends JPanel {
 		lblNewLabel.setBounds(10, 36, 464, 47);
 		add(lblNewLabel);
 	}
-	
+	private void perdio() {
+		if(partida.perdio()) {navegable.cambiarVista("VentanaPerdedor");}}
+	private void gano() {
+		if(partida.gano()) {navegable.cambiarVista("VentanaGanador");}
+	}
 	private void procesarIntento() {
 		
 		String usuario = obtenerEntradaUsuario();
-		if(partida.palabraEQentrada(usuario)) {navegable.cambiarVista("VistaGanador");};
 		Letra[] colorFinal = partida.verificarLetra(usuario);
 		pintarFila(colorFinal, filaActual);
 		

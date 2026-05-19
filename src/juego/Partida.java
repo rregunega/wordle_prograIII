@@ -3,7 +3,7 @@ package juego;
 public class Partida {
 
 	private boolean gano = false;
-	private int intentos = 5;
+	private int intentos = 6;
 	private lector_palabras palabras = new lector_palabras();
 	private String palabra;
 	
@@ -24,6 +24,7 @@ public class Partida {
 	public Letra[] verificarLetra(String PalabraUsuario) {
 		String PalabraMaquina=this.palabra;
 		Letra[] letras = new Letra[5];
+		verificarVictoria(PalabraUsuario);
 		
 		for (int indice = 0; indice < PalabraUsuario.length(); indice++) {
 			char usuario = PalabraUsuario.charAt(indice);
@@ -47,25 +48,28 @@ public class Partida {
 			letras[indice] = new Letra(usuario, EstadoPalabra.INCORRECTA);
 			continue;
 		}
+		verificarDerrota();
+		System.out.println(intentos);
 		return letras;
 	}
 
-	public boolean palabraEQentrada(String PalabraUsuario) {
+	private void verificarVictoria(String PalabraUsuario) {
 		if (palabra.equals(PalabraUsuario)) {
-			return true;
+			this.gano = true;
 		}
+	}
+	
+	private void verificarDerrota() {
+		if(!gano) {this.intentos--;}
+	}
+
+	public boolean perdio() {
+		if(intentos==0) {return true;}
 		return false;
 	}
 
-	public void perderJuego() {
-		System.out.println("Perdiste: " + palabra);
-	}
-
-	public static void ganoJuego() {
-		System.out.println("Ganaste!");
-	}
 	
-	public static void rellenarPalabra(String entrada) {
+	private static void rellenarPalabra(String entrada) {
 
 		if (entrada.length() < 5) {
 			StringBuilder salida = new StringBuilder(entrada);
@@ -77,6 +81,10 @@ public class Partida {
 			}
 			entrada = salida.toString();
 		}
+	}
+
+	public boolean gano() {
+		return gano;
 	}
 
 }
