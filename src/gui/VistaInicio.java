@@ -1,8 +1,6 @@
 package gui;
 
 import static gui.ConfiguracionUI.*;
-
-
 import java.awt.Color;
 import java.awt.Cursor;
 
@@ -50,7 +48,6 @@ public class VistaInicio extends JPanel {
 
 	private void agregarTitulo() {
 		JLabel tituloLabel = new JLabel("Wordle");
-		//tituloLabel.setFont(FUENTE_TITULO);
 		tituloLabel.setFont(fuenteTTFTitulo.deriveFont(60f));
 		tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		tituloLabel.setHorizontalTextPosition(SwingConstants.CENTER);

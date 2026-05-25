@@ -13,9 +13,11 @@ import static gui.ConfiguracionUI.COLOR_CELDA_GRIS;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,6 +49,7 @@ public class VistaJuego extends JPanel {
 		setLayout(null);
 		revalidate();
 		repaint();
+		agregarBotonInstrucciones();
 		// agregarTitulo("W-UNGS-dle jugando");
 
 		JPanel panelJuego = new JPanel();
@@ -58,11 +61,7 @@ public class VistaJuego extends JPanel {
 		for (int f = 0; f < FILAS; f++) {
 			JPanel fila = new JPanel();
 			fila.setLayout(null);
-			fila.setBounds(10, 10 + f * 62, 402, 62);
-
-			JLabel lblIntento = new JLabel("Intento " + (f + 1));
-			lblIntento.setBounds(10, 23, 80, 14);
-			fila.add(lblIntento);
+			fila.setBounds(75, 6 + f * 62, 402, 62);
 
 			for (int c = 0; c < COLUMNAS; c++) {
 				JTextField entradaUsuario = new JTextField();
@@ -82,7 +81,7 @@ public class VistaJuego extends JPanel {
 						validarFilaActual();
 					}
 				});
-				entradaUsuario.setBounds(97 + c * 54, 6, 50, 50);
+				entradaUsuario.setBounds(c * 53, 6, 50, 50);
 				entradaUsuario.setForeground(colorBase);
 				entradaUsuario.setBorder(BORDE_ENTRADA_TEXTO);
 				entradaUsuario.setFont(FUENTE_TEXTO_JUEGO);
@@ -150,6 +149,62 @@ public class VistaJuego extends JPanel {
 
 	}
 
+	private void agregarBotonInstrucciones() {
+		ImageIcon iconOriginal = new ImageIcon(
+				VistaInicio.class.getResource("/recursosUtilizados/recursosVistaInicio/icons/signoPregunta.png"));
+		ImageIcon iconEncima = new ImageIcon(
+				VistaInicio.class.getResource("/recursosUtilizados/recursosVistaInicio/icons/signoPreguntaEncima.png"));
+		ImageIcon iconClick = new ImageIcon(
+				VistaInicio.class.getResource("/recursosUtilizados/recursosVistaInicio/icons/signoPreguntaOscuro.png"));
+
+		Image iconTamañoOriginal = iconOriginal.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		Image iconTamañoEncima = iconEncima.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		Image iconTamañoClick = iconClick.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+
+		ImageIcon iconNuevo = new ImageIcon(iconTamañoOriginal);
+		ImageIcon iconPermanece = new ImageIcon(iconTamañoEncima);
+		ImageIcon iconPresinado = new ImageIcon(iconTamañoClick);
+
+		JButton btnInstrucciones = new JButton();
+
+		btnInstrucciones.setIcon(iconNuevo);
+		btnInstrucciones.setBounds(418, 22, 33, 38);
+
+		btnInstrucciones.setBorderPainted(false);
+		btnInstrucciones.setContentAreaFilled(false);
+		btnInstrucciones.setFocusPainted(false);
+		btnInstrucciones.setOpaque(false);
+		btnInstrucciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				navegable.cambiarVista("VistaInstrucciones");
+			}
+		});
+		add(btnInstrucciones);
+		btnInstrucciones.setDoubleBuffered(true);
+		btnInstrucciones.setActionCommand("Intrucciones");
+		{
+
+			btnInstrucciones.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseEntered(java.awt.event.MouseEvent evt) {
+					btnInstrucciones.setIcon(iconPermanece);
+				}
+
+				public void mouseExited(java.awt.event.MouseEvent evt) {
+					btnInstrucciones.setIcon(iconNuevo);
+				}
+
+				public void mousePressed(java.awt.event.MouseEvent evt) {
+					btnInstrucciones.setIcon(iconPresinado);
+				}
+
+				public void mouseReleased(java.awt.event.MouseEvent evt) {
+					btnInstrucciones.setIcon(iconPermanece);
+				}
+			});
+
+		}
+	}
+
 	private void pintarFila(Letra[] colorFinal, int fila) {
 
 		for (int col = 0; col < COLUMNAS; col++) {
@@ -159,10 +214,12 @@ public class VistaJuego extends JPanel {
 			if (estado.equals(EstadoPalabra.CORRECTA)) {
 
 				grilla[fila][col].setBackground(COLOR_CELDA_VERDE);
+				grilla[fila][col].setForeground(Color.WHITE);
 
 			} else if (estado.equals(EstadoPalabra.DESPLAZADA)) {
 
 				grilla[fila][col].setBackground(COLOR_CELDA_AMARILLO);
+				grilla[fila][col].setForeground(Color.WHITE);
 
 			} else {
 
@@ -173,6 +230,10 @@ public class VistaJuego extends JPanel {
 
 	private void perdio() {
 		if (partida.perdio()) {
+			Ventana ventana = (Ventana) navegable;
+
+			ventana.getVentanaPerdedor().mostrarPalabra(partida.getPalabraSecreta());
+
 			navegable.cambiarVista("VentanaPerdedor");
 		}
 	}
@@ -220,7 +281,8 @@ public class VistaJuego extends JPanel {
 		}
 		btnEnviar.setEnabled(letrasEnPantalla == COLUMNAS);
 	}
-	//metodo que reinicia el juego
+
+	// metodo que reinicia el juego
 	public void reiniciar() {
 		partida = new Partida();
 		filaActual = 0;
@@ -231,6 +293,7 @@ public class VistaJuego extends JPanel {
 				grilla[f][c].setText("");
 				grilla[f][c].setText("");
 				grilla[f][c].setBackground(Color.WHITE);
+				grilla[f][c].setForeground(Color.GRAY);
 
 				grilla[f][c].setEditable(true);
 				grilla[f][c].setFocusable(true);
@@ -242,9 +305,6 @@ public class VistaJuego extends JPanel {
 				}
 			}
 		}
-		System.out.println("REINICIANDO PARTIDA");
-		System.out.println(grilla[0][0].isEnabled());
-		System.out.println("'" + grilla[0][0].getText() + "'");
 
 		btnEnviar.setEnabled(false);
 

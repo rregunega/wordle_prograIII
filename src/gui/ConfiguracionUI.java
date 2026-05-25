@@ -35,7 +35,7 @@ public class ConfiguracionUI {
 	
 	public static final Color COLOR_CELDA_VERDE = new Color(106, 170, 101);
 	public static final Color COLOR_CELDA_AMARILLO = new Color(201, 180, 89);
-	public static final Color COLOR_CELDA_GRIS = new Color(120, 124, 127);
+	public static final Color COLOR_CELDA_GRIS = new Color(160, 160, 160);
 		
 	// Fuentes
 	public static final Font FUENTE_TITULO = new Font("Segoe UI", Font.BOLD, 24);

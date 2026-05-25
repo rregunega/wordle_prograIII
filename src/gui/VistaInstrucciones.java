@@ -75,8 +75,9 @@ public class VistaInstrucciones extends JPanel {
 		Color colorBase = COLOR_BOTON_VIOLETA;
 		Color colorPermanece = COLOR_BOTON_VIOLETA_PERMANECE;
 
-		JButton btnRegresar = new JButton("←");
-		btnRegresar.setBounds(23, 78, 67, 33);
+		JButton btnRegresar = new JButton("Inicio");
+		btnRegresar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnRegresar.setBounds(23, 78, 79, 33);
 		add(btnRegresar);
 		btnRegresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +92,7 @@ public class VistaInstrucciones extends JPanel {
 		btnRegresar.setOpaque(true);
 		btnRegresar.setBackground(COLOR_BOTON_VIOLETA);
 		btnRegresar.setForeground(CLARO);
-		btnRegresar.setFont(new Font("Segoe UI", Font.BOLD, 25));
+		btnRegresar.setFont(new Font("Segoe UI", Font.BOLD, 18));
 
 		// Hover + Press effect
 		btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {

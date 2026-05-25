@@ -15,6 +15,7 @@ public class Ventana extends JFrame implements Navegable {
 	private CardLayout cardLayout = new CardLayout();
 	private JPanel cardPanel = new JPanel();
 	private VistaJuego vistaJuego;
+	private VentanaPerdedor ventanaPerdedor;
 
 	public Ventana() {
 
@@ -35,12 +36,19 @@ public class Ventana extends JFrame implements Navegable {
 
 		cardPanel.add(new VistaInstrucciones(this), "VistaInstrucciones");
 		cardPanel.add(new VentanaGanador(this), "VentanaGanador");
-		cardPanel.add(new VentanaPerdedor(this), "VentanaPerdedor");
+		
+		ventanaPerdedor = new VentanaPerdedor(this);
+		cardPanel.add(ventanaPerdedor, "VentanaPerdedor");
+		
 		add(cardPanel);
 
 		cardLayout.show(cardPanel, "VistaInicio");
 		setVisible(true);
 
+	}
+	
+	public VentanaPerdedor getVentanaPerdedor() {
+	    return ventanaPerdedor;
 	}
 
 	// Método para alternar visibilidad de las vistas

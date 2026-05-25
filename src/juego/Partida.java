@@ -9,6 +9,7 @@ public class Partida {
 
 	public Partida() {
 		this.palabra = palabras.devolverPalabra().toUpperCase();
+		 System.out.println(palabra);
 	}
 
 	public String devolverPalabraSecreta() {
