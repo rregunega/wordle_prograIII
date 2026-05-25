@@ -24,7 +24,7 @@ public class VentanaPerdedor extends JPanel {
 	public VentanaPerdedor(Navegable navegable) {
         setLayout(null); // Manteniendo el estilo de diseño absoluto de las otras vistas
 
-        JLabel lblVictoria = new JLabel("QUE LASTIMA, PERDISTE");
+        JLabel lblVictoria = new JLabel("PERDISTE!");
         lblVictoria.setFont(FUENTE_TITULO);
         lblVictoria.setHorizontalAlignment(SwingConstants.CENTER);
         lblVictoria.setBounds(10, 150, 464, 47);

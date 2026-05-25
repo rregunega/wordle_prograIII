@@ -75,7 +75,7 @@ public class VistaInicio extends JPanel {
 		add(btnJugar);
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				navegable.cambiarVista("VistaJuego");
+				navegable.cambiarVista("NuevaPartida");
 			}
 		});
 

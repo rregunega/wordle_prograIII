@@ -3,12 +3,12 @@ package juego;
 import java.io.*;
 import java.util.*;
 
-public class lector_palabras {
+public class LectorPalabras {
 	List<String> listaDePalabras = new ArrayList<>();
 	File palabras;
 	Scanner scan;
 
-	public lector_palabras() {
+	public LectorPalabras() {
 		inicializar();
 		leer();
 	}
