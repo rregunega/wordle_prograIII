@@ -3,67 +3,93 @@ package juego;
 public class Partida {
 
 	private boolean gano = false;
-	private int intentos = 6;
-	private LectorPalabras palabras = new LectorPalabras();
+	private int intentosRestantes;
+	private int intentosMaximos;
+	private LectorPalabras palabras;
 	private String palabra;
+	private Dificultad dificultad;
+	private Idioma idioma;
+	private long inicio;
+	private long fin;
 
 	public Partida() {
+		this(Dificultad.FACIL, Idioma.ESPANOL);
+	}
+
+	public Partida(Dificultad dificultad, Idioma idioma) {
+		this.dificultad = dificultad;
+		this.idioma = idioma;
+		this.intentosMaximos = dificultad.getIntentos();
+		this.intentosRestantes = intentosMaximos;
+		this.palabras = new LectorPalabras(dificultad, idioma);
 		this.palabra = palabras.devolverPalabra().toUpperCase();
-		 System.out.println(palabra);
+		this.inicio = System.currentTimeMillis();
+		this.fin = 0;
 	}
 
 	public String devolverPalabraSecreta() {
 		return this.palabra;
 	}
 
-	public Letra[] verificarLetra(String PalabraUsuario) {
-		String PalabraMaquina = this.palabra;
+	public Letra[] verificarLetra(String palabraUsuario) {
+		String palabraMaquina = this.palabra;
+		palabraUsuario = palabraUsuario.toUpperCase();
 		Letra[] letras = new Letra[5];
-		verificarVictoria(PalabraUsuario);
+		char[] letrasDisponibles = palabraMaquina.toCharArray();
+		verificarVictoria(palabraUsuario);
 
-		for (int indice = 0; indice < PalabraUsuario.length(); indice++) {
-			char usuario = PalabraUsuario.charAt(indice);
-			char maquina = PalabraMaquina.charAt(indice);
+		for (int indice = 0; indice < palabraUsuario.length(); indice++) {
+			char usuario = palabraUsuario.charAt(indice);
+			char maquina = palabraMaquina.charAt(indice);
 
 			if (usuario == maquina) {
 				letras[indice] = new Letra(usuario, EstadoPalabra.CORRECTA);
-				PalabraMaquina = PalabraMaquina.replaceFirst(String.valueOf(maquina), " ");
-				System.out.println("agregado");
-				continue;
+				letrasDisponibles[indice] = ' ';
 			}
 		}
-		for (int indice = 0; indice < PalabraUsuario.length(); indice++) {
-			char usuario = PalabraUsuario.charAt(indice);
+
+		for (int indice = 0; indice < palabraUsuario.length(); indice++) {
+			char usuario = palabraUsuario.charAt(indice);
 			if (letras[indice] != null) {
 				continue;
 			}
-			if (PalabraMaquina.contains(String.valueOf(usuario))) {
+			int posicionEncontrada = buscarLetra(letrasDisponibles, usuario);
+			if (posicionEncontrada >= 0) {
 				letras[indice] = new Letra(usuario, EstadoPalabra.DESPLAZADA);
-				PalabraMaquina = PalabraMaquina.replaceFirst(String.valueOf(usuario), " ");
+				letrasDisponibles[posicionEncontrada] = ' ';
 				continue;
 			}
 			letras[indice] = new Letra(usuario, EstadoPalabra.INCORRECTA);
-			continue;
 		}
 		verificarDerrota();
-		System.out.println(intentos);
 		return letras;
 	}
 
-	private void verificarVictoria(String PalabraUsuario) {
-		if (palabra.equals(PalabraUsuario)) {
+	private int buscarLetra(char[] letrasDisponibles, char letra) {
+		for (int i = 0; i < letrasDisponibles.length; i++) {
+			if (letrasDisponibles[i] == letra) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private void verificarVictoria(String palabraUsuario) {
+		if (palabra.equals(palabraUsuario)) {
 			this.gano = true;
+			this.fin = System.currentTimeMillis();
+			MejorTiempo.registrar(dificultad, idioma, getTiempoEnSegundos());
 		}
 	}
 
 	private void verificarDerrota() {
 		if (!gano) {
-			this.intentos--;
+			this.intentosRestantes--;
 		}
 	}
 
 	public boolean perdio() {
-		if (intentos == 0) {
+		if (intentosRestantes == 0 && !gano) {
 			return true;
 		}
 		return false;
@@ -75,5 +101,35 @@ public class Partida {
 
 	public String getPalabraSecreta() {
 		return palabra;
+	}
+
+	public int getIntentosMaximos() {
+		return intentosMaximos;
+	}
+
+	public int getIntentosRestantes() {
+		return intentosRestantes;
+	}
+
+	public Dificultad getDificultad() {
+		return dificultad;
+	}
+
+	public Idioma getIdioma() {
+		return idioma;
+	}
+
+	public long getTiempoEnSegundos() {
+		long tiempoFinal;
+		if (fin > 0) {
+			tiempoFinal = fin;
+		} else {
+			tiempoFinal = System.currentTimeMillis();
+		}
+		return (tiempoFinal - inicio) / 1000;
+	}
+
+	public long getMejorTiempo() {
+		return MejorTiempo.obtener(dificultad, idioma);
 	}
 }
