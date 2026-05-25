@@ -19,6 +19,7 @@ public class VentanaGanador extends JPanel implements Navegable {
 
 	private static final long serialVersionUID = 1L;
 	private Image fondoGanar;
+	private JLabel lblVictoria;
 
 	/**
 	 * Create the panel.
@@ -27,7 +28,7 @@ public class VentanaGanador extends JPanel implements Navegable {
 		setLayout(null); // Manteniendo el estilo de diseño absoluto de las otras vistas
 		agregarFondoGanar();
 		
-		JLabel lblVictoria = new JLabel("¡Felicidades, ganaste!");
+		lblVictoria = new JLabel("¡Felicidades, ganaste!");
 		lblVictoria.setFont(new Font("Segoe UI", Font.BOLD, 24));
 		lblVictoria.setHorizontalAlignment(SwingConstants.CENTER);
 		lblVictoria.setBounds(10, 226, 464, 93);
@@ -88,6 +89,15 @@ public class VentanaGanador extends JPanel implements Navegable {
 	public void cambiarVista(String nombreVista) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void mostrarResultado(long tiempo, long mejorTiempo) {
+		String textoMejor = "Sin mejor tiempo previo";
+		if (mejorTiempo > 0) {
+			textoMejor = "Mejor tiempo: " + mejorTiempo + " segundos";
+		}
+		lblVictoria.setText("<html><center>¡Felicidades, ganaste!<br>Tiempo: " + tiempo + " segundos<br>"
+				+ textoMejor + "</center></html>");
 	}
 	private void agregarFondoGanar() {
 		fondoGanar = new ImageIcon(

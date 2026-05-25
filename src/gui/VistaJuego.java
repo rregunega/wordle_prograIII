@@ -1,15 +1,6 @@
 package gui;
 
-import static gui.ConfiguracionUI.COLOR_TEXTO_CLARO;
-import static gui.ConfiguracionUI.FUENTE_BOTON;
-import static gui.ConfiguracionUI.FUENTE_TEXTO_JUEGO;
-import static gui.ConfiguracionUI.COLOR_BOTON_VIOLETA;
-import static gui.ConfiguracionUI.COLOR_BOTON_VIOLETA_PERMANECE;
-import static gui.ConfiguracionUI.BORDE_ENTRADA_TEXTO;
-import static gui.ConfiguracionUI.GRAY;
-import static gui.ConfiguracionUI.COLOR_CELDA_VERDE;
-import static gui.ConfiguracionUI.COLOR_CELDA_AMARILLO;
-import static gui.ConfiguracionUI.COLOR_CELDA_GRIS;
+import static gui.ConfiguracionUI.*;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -22,11 +13,15 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.PlainDocument;
 
+import juego.Dificultad;
 import juego.EstadoPalabra;
+import juego.Idioma;
 import juego.Letra;
 import juego.Partida;
 
@@ -34,14 +29,17 @@ public class VistaJuego extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	// TODO: obtener desde la lógica
 	private final int COLUMNAS = 5; // Igual al largo de la palabra
-	private final int FILAS = 6; // Igual a la cantidad de intentos
+	private final int FILAS = 6; // Maximo de intentos que puede mostrar la pantalla
 	private Partida partida;
 	private JButton btnEnviar = new JButton("Enviar intento");
 	private JTextField[][] grilla = new JTextField[FILAS][COLUMNAS];
+	private JPanel[] panelFilas = new JPanel[FILAS];
 	private int filaActual = 0;
 	private Navegable navegable;
+	private JLabel lblDatosPartida = new JLabel();
+	private JLabel lblTiempo = new JLabel();
+	private Timer timer;
 
 	public VistaJuego(Navegable navegable) {
 		this.navegable = navegable;
@@ -50,6 +48,7 @@ public class VistaJuego extends JPanel {
 		revalidate();
 		repaint();
 		agregarBotonInstrucciones();
+		agregarDatosPartida();
 		// agregarTitulo("W-UNGS-dle jugando");
 
 		JPanel panelJuego = new JPanel();
@@ -62,6 +61,7 @@ public class VistaJuego extends JPanel {
 			JPanel fila = new JPanel();
 			fila.setLayout(null);
 			fila.setBounds(75, 6 + f * 62, 402, 62);
+			panelFilas[f] = fila;
 
 			for (int c = 0; c < COLUMNAS; c++) {
 				JTextField entradaUsuario = new JTextField();
@@ -230,6 +230,7 @@ public class VistaJuego extends JPanel {
 
 	private void perdio() {
 		if (partida.perdio()) {
+			detenerTimer();
 			Ventana ventana = (Ventana) navegable;
 
 			ventana.getVentanaPerdedor().mostrarPalabra(partida.getPalabraSecreta());
@@ -240,24 +241,32 @@ public class VistaJuego extends JPanel {
 
 	private void gano() {
 		if (partida.gano()) {
+			detenerTimer();
+			if (navegable instanceof Ventana) {
+				Ventana ventana = (Ventana) navegable;
+				ventana.getVentanaGanador().mostrarResultado(partida.getTiempoEnSegundos(), partida.getMejorTiempo());
+			}
 			navegable.cambiarVista("VentanaGanador");
 		}
 	}
 
 	private void procesarIntento() {
 
+		int filaIntento = filaActual;
 		String usuario = obtenerEntradaUsuario();
 		Letra[] colorFinal = partida.verificarLetra(usuario);
-		pintarFila(colorFinal, filaActual);
+		pintarFila(colorFinal, filaIntento);
 
-		if (filaActual < FILAS - 1) {
+		if (filaActual < partida.getIntentosMaximos() - 1) {
 			filaActual++;
 		}
 
 		for (int col = 0; col < COLUMNAS; col++) {
-			grilla[filaActual - 1][col].setEditable(false);
-			grilla[filaActual - 1][col].setFocusable(false);
-			grilla[filaActual][col].setEnabled(true);
+			grilla[filaIntento][col].setEditable(false);
+			grilla[filaIntento][col].setFocusable(false);
+			if (!partida.gano() && !partida.perdio() && filaActual != filaIntento) {
+				grilla[filaActual][col].setEnabled(true);
+			}
 		}
 	}
 
@@ -268,7 +277,6 @@ public class VistaJuego extends JPanel {
 			usuario.append(grilla[filaActual][posicion].getText());
 		}
 
-		System.out.println(usuario);
 		return usuario.toString();
 	}
 
@@ -284,13 +292,17 @@ public class VistaJuego extends JPanel {
 
 	// metodo que reinicia el juego
 	public void reiniciar() {
-		partida = new Partida();
+		reiniciar(Dificultad.FACIL, Idioma.ESPANOL);
+	}
+
+	public void reiniciar(Dificultad dificultad, Idioma idioma) {
+		partida = new Partida(dificultad, idioma);
 		filaActual = 0;
+		actualizarDatosPartida();
 
 		for (int f = 0; f < FILAS; f++) {
+			panelFilas[f].setVisible(f < partida.getIntentosMaximos());
 			for (int c = 0; c < COLUMNAS; c++) {
-				grilla[f][c].setText("");
-				grilla[f][c].setText("");
 				grilla[f][c].setText("");
 				grilla[f][c].setBackground(Color.WHITE);
 				grilla[f][c].setForeground(Color.GRAY);
@@ -307,7 +319,42 @@ public class VistaJuego extends JPanel {
 		}
 
 		btnEnviar.setEnabled(false);
+		iniciarTimer();
 
+	}
+
+	private void agregarDatosPartida() {
+		lblDatosPartida.setHorizontalAlignment(SwingConstants.LEFT);
+		lblDatosPartida.setBounds(29, 22, 280, 30);
+		add(lblDatosPartida);
+
+		lblTiempo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTiempo.setBounds(305, 22, 105, 30);
+		add(lblTiempo);
+
+		actualizarDatosPartida();
+		lblTiempo.setText("0 seg.");
+	}
+
+	private void actualizarDatosPartida() {
+		lblDatosPartida.setText(partida.getDificultad().getNombre() + " - " + partida.getIdioma().toString());
+	}
+
+	private void iniciarTimer() {
+		detenerTimer();
+		lblTiempo.setText("0 seg.");
+		timer = new Timer(1000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblTiempo.setText(partida.getTiempoEnSegundos() + " seg.");
+			}
+		});
+		timer.start();
+	}
+
+	private void detenerTimer() {
+		if (timer != null) {
+			timer.stop();
+		}
 	}
 
 }

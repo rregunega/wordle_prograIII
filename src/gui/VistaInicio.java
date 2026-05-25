@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -16,11 +17,16 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.Graphics;
 
+import juego.Dificultad;
+import juego.Idioma;
+
 public class VistaInicio extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Navegable navegable;
 	private Image fondoInicio;
+	private JComboBox<Dificultad> comboDificultad;
+	private JComboBox<Idioma> comboIdioma;
 
 	public VistaInicio(Navegable navegable) {
 		this.navegable = navegable;
@@ -28,6 +34,7 @@ public class VistaInicio extends JPanel {
 		agregarFondoInicio();
 		agregarIconoWordle();
 		agregarTitulo();
+		agregarOpciones();
 		agregarBotonJugar();
 		agregarBotonInstrucciones();
 	}
@@ -68,11 +75,17 @@ public class VistaInicio extends JPanel {
 		add(subtitulo);
 
 		JButton btnJugar = new JButton("Jugar");
-		btnJugar.setBounds(188, 379, 112, 46);
+		btnJugar.setBounds(188, 443, 112, 46);
 		add(btnJugar);
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				navegable.cambiarVista("NuevaPartida");
+				if (navegable instanceof Ventana) {
+					Ventana ventana = (Ventana) navegable;
+					ventana.iniciarNuevaPartida((Dificultad) comboDificultad.getSelectedItem(),
+							(Idioma) comboIdioma.getSelectedItem());
+				} else {
+					navegable.cambiarVista("NuevaPartida");
+				}
 			}
 		});
 
@@ -105,6 +118,30 @@ public class VistaInicio extends JPanel {
 		});
 	}
 
+	private void agregarOpciones() {
+		JLabel lblDificultad = new JLabel("Dificultad");
+		lblDificultad.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		lblDificultad.setBounds(124, 365, 95, 24);
+		add(lblDificultad);
+
+		comboDificultad = new JComboBox<Dificultad>();
+		comboDificultad.addItem(Dificultad.FACIL);
+		comboDificultad.addItem(Dificultad.DIFICIL);
+		comboDificultad.setBounds(124, 391, 112, 31);
+		add(comboDificultad);
+
+		JLabel lblIdioma = new JLabel("Idioma");
+		lblIdioma.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		lblIdioma.setBounds(254, 365, 95, 24);
+		add(lblIdioma);
+
+		comboIdioma = new JComboBox<Idioma>();
+		comboIdioma.addItem(Idioma.ESPANOL);
+		comboIdioma.addItem(Idioma.INGLES);
+		comboIdioma.setBounds(254, 391, 112, 31);
+		add(comboIdioma);
+	}
+
 	private void agregarBotonInstrucciones() {
 		ImageIcon iconOriginal = new ImageIcon(
 				VistaInicio.class.getResource("/recursosUtilizados/recursosVistaInicio/icons/signoPregunta.png"));
@@ -124,7 +161,7 @@ public class VistaInicio extends JPanel {
 		JButton btnInstrucciones = new JButton();
 
 		btnInstrucciones.setIcon(iconNuevo);
-		btnInstrucciones.setBounds(310, 385, 33, 38);
+		btnInstrucciones.setBounds(310, 449, 33, 38);
 
 		btnInstrucciones.setBorderPainted(false);
 		btnInstrucciones.setContentAreaFilled(false);

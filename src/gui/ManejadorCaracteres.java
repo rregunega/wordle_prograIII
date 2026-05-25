@@ -8,8 +8,7 @@ import javax.swing.text.DocumentFilter;
 public class ManejadorCaracteres extends DocumentFilter {
 
 	@Override
-	public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
-			throws BadLocationException {
+	public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
 
 		if (string != null && string.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]*") && fb.getDocument().getLength() < 1) {
 

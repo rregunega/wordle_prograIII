@@ -1,12 +1,6 @@
 package gui;
 
-import static gui.ConfiguracionUI.CLARO;
-import static gui.ConfiguracionUI.COLOR_ACENTO;
-import static gui.ConfiguracionUI.COLOR_BOTON_VIOLETA;
-import static gui.ConfiguracionUI.COLOR_BOTON_VIOLETA_PERMANECE;
-import static gui.ConfiguracionUI.COLOR_FONDO_SECUNDARIO;
-import static gui.ConfiguracionUI.FUENTE_BOTON;
-import static gui.ConfiguracionUI.FUENTE_TEXTO_INSTRUCCIONES;
+import static gui.ConfiguracionUI.*;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -59,10 +53,11 @@ public class VistaInstrucciones extends JPanel {
 		panelInstrucciones.add(lblComoJugar);
 
 		JLabel lblInstruccioens = new JLabel(
-				"<html><p>Adivina la palabra secreta de 5 letras. Tienes 6 intentos para acertar. Después de cada intento, los colores te darán pistas:"
+				"<html><p>Adivina la palabra secreta de 5 letras. La cantidad de intentos depende de la dificultad elegida. Después de cada intento, los colores te darán pistas:"
 						+ "<ul><li>Verde: Letra correcta en la posición correcta</li>"
 						+ "<li>Amarillo: Letra correcta pero en posición incorrecta</li>"
-						+ "<li>Gris: Letra no está en la palabra</li></ul>" + "</html>");
+						+ "<li>Gris: Letra no está en la palabra</li></ul>"
+						+ "<p>También podés elegir idioma y ver el tiempo que tardaste al ganar.</p>" + "</html>");
 		lblInstruccioens.setAlignmentY(Component.TOP_ALIGNMENT);
 		lblInstruccioens.setVerticalTextPosition(SwingConstants.TOP);
 		lblInstruccioens.setVerticalAlignment(SwingConstants.TOP);
@@ -123,7 +118,7 @@ public class VistaInstrucciones extends JPanel {
 		add(btnJugar);
 		btnJugar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				navegable.cambiarVista("VistaJuego");
+				navegable.cambiarVista("NuevaPartida");
 			}
 		});
 

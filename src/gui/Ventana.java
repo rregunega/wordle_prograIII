@@ -7,6 +7,9 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import juego.Dificultad;
+import juego.Idioma;
+
 public class Ventana extends JFrame implements Navegable {
 
 	// Agregado por autofix de Eclipse
@@ -16,6 +19,9 @@ public class Ventana extends JFrame implements Navegable {
 	private JPanel cardPanel = new JPanel();
 	private VistaJuego vistaJuego;
 	private VentanaPerdedor ventanaPerdedor;
+	private VentanaGanador ventanaGanador;
+	private Dificultad dificultadElegida = Dificultad.FACIL;
+	private Idioma idiomaElegido = Idioma.ESPANOL;
 
 	public Ventana() {
 
@@ -35,20 +41,32 @@ public class Ventana extends JFrame implements Navegable {
 		cardPanel.add(vistaJuego, "VistaJuego");
 
 		cardPanel.add(new VistaInstrucciones(this), "VistaInstrucciones");
-		cardPanel.add(new VentanaGanador(this), "VentanaGanador");
-		
+		ventanaGanador = new VentanaGanador(this);
+		cardPanel.add(ventanaGanador, "VentanaGanador");
+
 		ventanaPerdedor = new VentanaPerdedor(this);
 		cardPanel.add(ventanaPerdedor, "VentanaPerdedor");
-		
+
 		add(cardPanel);
 
 		cardLayout.show(cardPanel, "VistaInicio");
 		setVisible(true);
 
 	}
-	
+
 	public VentanaPerdedor getVentanaPerdedor() {
-	    return ventanaPerdedor;
+		return ventanaPerdedor;
+	}
+
+	public VentanaGanador getVentanaGanador() {
+		return ventanaGanador;
+	}
+
+	public void iniciarNuevaPartida(Dificultad dificultad, Idioma idioma) {
+		dificultadElegida = dificultad;
+		idiomaElegido = idioma;
+		vistaJuego.reiniciar(dificultadElegida, idiomaElegido);
+		cardLayout.show(cardPanel, "VistaJuego");
 	}
 
 	// Método para alternar visibilidad de las vistas
@@ -56,7 +74,7 @@ public class Ventana extends JFrame implements Navegable {
 	public void cambiarVista(String nombreVista) {
 
 		if (nombreVista.equals("NuevaPartida")) {
-			vistaJuego.reiniciar();
+			vistaJuego.reiniciar(dificultadElegida, idiomaElegido);
 			cardLayout.show(cardPanel, "VistaJuego");
 			return;
 		}
@@ -65,5 +83,5 @@ public class Ventana extends JFrame implements Navegable {
 
 }
 
-//https://stackoverflow.com/questions/28488458/cardlayout-changing-panel-from-another-class
-//https://docs.oracle.com/javase/tutorial/uiswing/layout/card.html
+// https://stackoverflow.com/questions/28488458/cardlayout-changing-panel-from-another-class
+// https://docs.oracle.com/javase/tutorial/uiswing/layout/card.html
