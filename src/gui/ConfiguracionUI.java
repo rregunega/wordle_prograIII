@@ -1,4 +1,5 @@
-	package gui;
+package gui;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.border.Border;
@@ -29,44 +30,45 @@ public class ConfiguracionUI {
 	public static final Color CLARO = new Color(248, 249, 250);
 	public static final Color OSCURO = new Color(33, 37, 41);
 	public static final Color GRAY = new Color(128, 128, 128);
-	
+
 	public static final Color COLOR_BOTON_VIOLETA = new Color(190, 116, 252);
 	public static final Color COLOR_BOTON_VIOLETA_PERMANECE = new Color(170, 100, 230);
-	
+
 	public static final Color COLOR_CELDA_VERDE = new Color(106, 170, 101);
 	public static final Color COLOR_CELDA_AMARILLO = new Color(201, 180, 89);
 	public static final Color COLOR_CELDA_GRIS = new Color(160, 160, 160);
-		
+
 	// Fuentes
 	public static final Font FUENTE_TITULO = new Font("Segoe UI", Font.BOLD, 24);
 	public static final Font FUENTE_SUBTITULO = new Font("Segoe UI", Font.BOLD, 20);
 	public static final Font FUENTE_TEXTO_JUEGO = new Font("Arial", Font.BOLD, 25);
 	public static final Font FUENTE_TEXTO_INSTRUCCIONES = new Font("Segoe UI", Font.PLAIN, 16);
 	public static final Font FUENTE_BOTON = new Font("Segoe UI", Font.BOLD, 18);
-	
+
 	public static final Border BORDE_ENTRADA_TEXTO = BorderFactory.createLineBorder(Color.GRAY.brighter(), 2);
-	
-	public static Font fuenteTTFTitulo =
-		    cargarFuenteInicio("/recursosUtilizados/recursosVistaInicio/fuentes/Classyvogueregular.ttf");
 
-    private static Font cargarFuenteInicio(String ruta) {	
-    	 try (InputStream fuente = ConfiguracionUI.class.getResourceAsStream(ruta)) {
-    	        if (fuente == null) {
-    	            throw new IllegalArgumentException("No se encontró la fuente: " + ruta);
-    	        }
-    	        return Font.createFont(Font.TRUETYPE_FONT, fuente);
-    	        
-    	    } catch (Exception e) {
-    	        System.err.println("Error cargando fuentes: " + e.getMessage());
-    	        e.printStackTrace();
+	public static Font fuenteTTFTitulo = cargarFuenteInicio(
+			"/recursosUtilizados/recursosVistaInicio/fuentes/Classyvogueregular.ttf");
 
-    	        return new Font("Segoe UI", Font.PLAIN, 12);
-    	    }
-    }
-    
+	private static Font cargarFuenteInicio(String ruta) {
+		try (InputStream fuente = ConfiguracionUI.class.getResourceAsStream(ruta)) {
+			if (fuente == null) {
+				throw new IllegalArgumentException("No se encontró la fuente: " + ruta);
+			}
+			return Font.createFont(Font.TRUETYPE_FONT, fuente);
+
+		} catch (Exception e) {
+			System.err.println("Error cargando fuentes: " + e.getMessage());
+			e.printStackTrace();
+
+			return new Font("Segoe UI", Font.PLAIN, 12);
+		}
+	}
+
 	public static void setearLookAndFeel() {
 		try {
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");;
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
