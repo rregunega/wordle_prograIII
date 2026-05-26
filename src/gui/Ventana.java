@@ -12,7 +12,6 @@ import juego.Idioma;
 
 public class Ventana extends JFrame implements Navegable {
 
-	// Agregado por autofix de Eclipse
 	private static final long serialVersionUID = 1L;
 
 	private CardLayout cardLayout = new CardLayout();
@@ -34,7 +33,6 @@ public class Ventana extends JFrame implements Navegable {
 
 		cardPanel.setLayout(cardLayout);
 
-		// Creo las vistas
 		cardPanel.add(new VistaInicio(this), "VistaInicio");
 
 		vistaJuego = new VistaJuego(this);
@@ -95,5 +93,3 @@ public class Ventana extends JFrame implements Navegable {
 
 }
 
-// https://stackoverflow.com/questions/28488458/cardlayout-changing-panel-from-another-class
-// https://docs.oracle.com/javase/tutorial/uiswing/layout/card.html
