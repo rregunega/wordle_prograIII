@@ -65,7 +65,7 @@ public class Ventana extends JFrame implements Navegable {
 	public void iniciarNuevaPartida(Dificultad dificultad, Idioma idioma) {
 		dificultadElegida = dificultad;
 		idiomaElegido = idioma;
-		vistaJuego.reiniciar(dificultadElegida, idiomaElegido);
+		crearVistaJuegoNueva();
 		cardLayout.show(cardPanel, "VistaJuego");
 	}
 
@@ -74,11 +74,23 @@ public class Ventana extends JFrame implements Navegable {
 	public void cambiarVista(String nombreVista) {
 
 		if (nombreVista.equals("NuevaPartida")) {
-			vistaJuego.reiniciar(dificultadElegida, idiomaElegido);
+			crearVistaJuegoNueva();
 			cardLayout.show(cardPanel, "VistaJuego");
 			return;
 		}
+		if (nombreVista.equals("VistaInicio")) {
+			vistaJuego.limpiarTablero();
+		}
 		cardLayout.show(cardPanel, nombreVista);
+	}
+
+	private void crearVistaJuegoNueva() {
+		cardPanel.remove(vistaJuego);
+		vistaJuego = new VistaJuego(this);
+		cardPanel.add(vistaJuego, "VistaJuego");
+		vistaJuego.reiniciar(dificultadElegida, idiomaElegido);
+		cardPanel.revalidate();
+		cardPanel.repaint();
 	}
 
 }

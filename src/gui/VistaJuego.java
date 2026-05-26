@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -40,6 +41,7 @@ public class VistaJuego extends JPanel {
 	private JLabel lblDatosPartida = new JLabel();
 	private JLabel lblTiempo = new JLabel();
 	private Timer timer;
+	private boolean reiniciandoTablero = false;
 
 	public VistaJuego(Navegable navegable) {
 		this.navegable = navegable;
@@ -64,6 +66,8 @@ public class VistaJuego extends JPanel {
 			panelFilas[f] = fila;
 
 			for (int c = 0; c < COLUMNAS; c++) {
+				final int filaCelda = f;
+				final int columnaCelda = c;
 				JTextField entradaUsuario = new JTextField();
 				Color colorBase = GRAY;
 				PlainDocument documento = (PlainDocument) entradaUsuario.getDocument();
@@ -71,6 +75,7 @@ public class VistaJuego extends JPanel {
 				documento.addDocumentListener(new DocumentListener() {
 					public void insertUpdate(DocumentEvent e) {
 						validarFilaActual();
+						moverFocoDespuesDeIngresar(filaCelda, columnaCelda);
 					}
 
 					public void removeUpdate(DocumentEvent e) {
@@ -268,6 +273,14 @@ public class VistaJuego extends JPanel {
 				grilla[filaActual][col].setEnabled(true);
 			}
 		}
+
+		if (!partida.gano() && !partida.perdio() && filaActual != filaIntento) {
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					grilla[filaActual][0].requestFocusInWindow();
+				}
+			});
+		}
 	}
 
 	private String obtenerEntradaUsuario() {
@@ -281,13 +294,46 @@ public class VistaJuego extends JPanel {
 	}
 
 	private void validarFilaActual() {
+		if (reiniciandoTablero) {
+			btnEnviar.setEnabled(false);
+			return;
+		}
+
 		int letrasEnPantalla = 0;
 		for (int c = 0; c < COLUMNAS; c++) {
 			if (!grilla[filaActual][c].getText().trim().isEmpty()) {
 				letrasEnPantalla++;
 			}
 		}
-		btnEnviar.setEnabled(letrasEnPantalla == COLUMNAS);
+		boolean filaCompleta = letrasEnPantalla == COLUMNAS;
+		btnEnviar.setEnabled(filaCompleta);
+		if (filaCompleta) {
+			enviarIntentoAutomaticamente(filaActual);
+		}
+	}
+
+	private void moverFocoDespuesDeIngresar(int fila, int columna) {
+		if (fila != filaActual || columna >= COLUMNAS - 1) {
+			return;
+		}
+
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				if (grilla[fila][columna].getText().length() == 1 && grilla[fila][columna + 1].isEnabled()) {
+					grilla[fila][columna + 1].requestFocusInWindow();
+				}
+			}
+		});
+	}
+
+	private void enviarIntentoAutomaticamente(int fila) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				if (fila == filaActual && btnEnviar.isEnabled()) {
+					btnEnviar.doClick();
+				}
+			}
+		});
 	}
 
 	// metodo que reinicia el juego
@@ -300,6 +346,7 @@ public class VistaJuego extends JPanel {
 		filaActual = 0;
 		actualizarDatosPartida();
 
+		reiniciandoTablero = true;
 		for (int f = 0; f < FILAS; f++) {
 			panelFilas[f].setVisible(f < partida.getIntentosMaximos());
 			for (int c = 0; c < COLUMNAS; c++) {
@@ -317,10 +364,38 @@ public class VistaJuego extends JPanel {
 				}
 			}
 		}
+		reiniciandoTablero = false;
 
 		btnEnviar.setEnabled(false);
 		iniciarTimer();
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				grilla[0][0].requestFocusInWindow();
+			}
+		});
 
+	}
+
+	public void limpiarTablero() {
+		detenerTimer();
+		filaActual = 0;
+
+		reiniciandoTablero = true;
+		for (int f = 0; f < FILAS; f++) {
+			panelFilas[f].setVisible(true);
+			for (int c = 0; c < COLUMNAS; c++) {
+				grilla[f][c].setText("");
+				grilla[f][c].setBackground(Color.WHITE);
+				grilla[f][c].setForeground(Color.GRAY);
+				grilla[f][c].setEditable(true);
+				grilla[f][c].setFocusable(true);
+				grilla[f][c].setEnabled(f == 0);
+			}
+		}
+		reiniciandoTablero = false;
+
+		btnEnviar.setEnabled(false);
+		lblTiempo.setText("0 seg.");
 	}
 
 	private void agregarDatosPartida() {
