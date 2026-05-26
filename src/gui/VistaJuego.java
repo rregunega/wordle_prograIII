@@ -7,6 +7,8 @@ import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,7 +53,6 @@ public class VistaJuego extends JPanel {
 		repaint();
 		agregarBotonInstrucciones();
 		agregarDatosPartida();
-		// agregarTitulo("W-UNGS-dle jugando");
 
 		JPanel panelJuego = new JPanel();
 		panelJuego.setBounds(29, 82, 422, 410);
@@ -69,6 +70,7 @@ public class VistaJuego extends JPanel {
 				final int filaCelda = f;
 				final int columnaCelda = c;
 				JTextField entradaUsuario = new JTextField();
+				borrarConTeclaBackSpace(entradaUsuario, filaCelda, columnaCelda);
 				Color colorBase = GRAY;
 				PlainDocument documento = (PlainDocument) entradaUsuario.getDocument();
 				documento.setDocumentFilter(new ManejadorCaracteres());
@@ -331,6 +333,19 @@ public class VistaJuego extends JPanel {
 			public void run() {
 				if (fila == filaActual && btnEnviar.isEnabled()) {
 					btnEnviar.doClick();
+				}
+			}
+		});
+	}
+
+	private void borrarConTeclaBackSpace(JTextField entradaUsuario, int filaCelda, int columnaCelda) {
+		entradaUsuario.addKeyListener(new KeyAdapter() {
+
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && entradaUsuario.getText().isEmpty() && columnaCelda > 0) {
+					e.consume();
+					grilla[filaCelda][columnaCelda - 1].setText("");
+					grilla[filaCelda][columnaCelda - 1].requestFocusInWindow();
 				}
 			}
 		});

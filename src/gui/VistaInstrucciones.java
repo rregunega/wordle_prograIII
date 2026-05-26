@@ -42,7 +42,7 @@ public class VistaInstrucciones extends JPanel {
 	private void agregarPanelDeInstrucciones() {
 		JPanel panelInstrucciones = new JPanel();
 		panelInstrucciones.setBorder(new LineBorder(COLOR_ACENTO, 2, true));
-		panelInstrucciones.setBounds(23, 131, 422, 252);
+		panelInstrucciones.setBounds(23, 131, 425, 291);
 		panelInstrucciones.setLayout(null);
 		panelInstrucciones.setBackground(COLOR_FONDO_SECUNDARIO);
 		add(panelInstrucciones);
